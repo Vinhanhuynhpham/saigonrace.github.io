@@ -641,11 +641,16 @@
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <a href="#">Trang chủ</a>
-        <div class="sidebar-sub">
+        <div class="sidebar-dropdown">
+            <button class="sidebar-toggle" onclick="toggleSidebarDropdown(this)">
+                Bộ sưu tâp <i class="bi bi-caret-down-fill"></i><span>▾</span>
+            </button>
+            <div class="sidebar-sub">
             <a href="bst-hw.html">Hotwheels</a>
             <a href="bst-tmc.html">Tomica</a>
             <a href="bst-mjr.html">Majorette</a>
             <a href="bst-p-race.html">Poprace</a>
+            </div>
         </div>
         <div class="sidebar-dropdown">
             <button class="sidebar-toggle" onclick="toggleSidebarDropdown(this)">
