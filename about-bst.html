@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -534,259 +535,77 @@
                 max-width: 100%;
             }
         }
-        /* =============================
-   ABOUT BODY – STRICT LAYOUT
-============================= */
         
-        .about-layout {
-            padding: 80px 0;
-            font-family: 'Space Mono', monospace;
-        }
         
-        .about-wrap {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-        /* TOP GRID */
-        
-        .about-top {
-            display: grid;
-            grid-template-columns: 2.2fr 1fr;
-            gap: 24px;
-        }
-        /* COMMON */
-        
-        .card-title {
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-        /* TRAINER */
-        
-        .trainer-card {
-            border: 3px solid #1e3f3f;
-            padding: 20px;
-            background-color: #dddcd8;
-        }
-        
-        .trainer-body {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .trainer-avatar {
-            width: 140px;
-            height: 180px;
-            object-fit: cover;
-            border: 2px solid #1e3f3f;
-        }
-        
-        .trainer-name {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .trainer-mail {
-            font-size: 13px;
-            opacity: .7;
-        }
-        
-        .trainer-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 12px 0;
-        }
-        
-        .trainer-stats div {
-            border: 2px solid #1e3f3f;
-            padding: 6px;
-            text-align: center;
-            background-color: #697c69;
-        }
-        
-        .trainer-stats strong {
-            display: block;
-            font-size: 18px;
-        }
-        
-        .trainer-desc {
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        
-        .trainer-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        
-        .trainer-actions button {
-            padding: 6px 14px;
-            border: 2px solid #1e3f3f;
-            background: #dddcd8;
-            color: #1e3f3f;
-            cursor: pointer;
-        }
-        
-        .trainer-actions .dark {
-            background: #1e3f3f;
-            color: #fff;
-        }
-        /* WORK */
-        
-        .work-card {
-            border: 3px solid #1e3f3f;
-            padding: 20px;
-            background-color: #dddcd8;
-        }
-        
-        .work-item {
-            border: 2px solid #1e3f3f;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #697c69;
-        }
-        
-        .work-item span {
-            font-size: 12px;
-            opacity: .6;
-        }
-        /* REVIEWS */
-        
-        .review-card {
-            border: 3px solid #1e3f3f;
-            padding: 20px;
-            background-color: #dddcd8;
-        }
-        
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        
-        .review-header button {
-            border: 2px solid #1e3f3f;
-            background: #fff;
-            padding: 4px 10px;
-        }
-        
-        .review-grid {
-            display: grid;
-            grid-template-columns: 1.2fr repeat(3, 1fr);
-            gap: 16px;
-        }
-        
-        .review-summary,
-        .review-item {
-            border: 2px solid #1e3f3f;
-            padding: 12px;
-            font-size: 13px;
-            text-align: center;
-            background-color: #697c69;
-        }
-        
-        @media (max-width: 1024px) {
-            .about-top {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-            .trainer-body {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .trainer-avatar {
-                width: 120px;
-                height: 150px;
-            }
-            .trainer-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .review-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-            /* Facebook chiếm full hàng trên tablet */
-            
-            .review-summary {
-                grid-column: 1 / -1;
-            }
-        }
-        
-        @media (max-width: 767px) {
-            .about-layout {
-                padding: 48px 16px;
-            }
-            .card-title {
-                font-size: 18px;
-            }
-            /* TRAINER */
-            
-            .trainer-card {
-                padding: 16px;
-            }
-            .trainer-avatar {
-                width: 100%;
-                height: 200px;
-            }
-            .trainer-name {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-            .trainer-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            .trainer-stats strong {
-                font-size: 16px;
-            }
-            .trainer-actions {
-                flex-wrap: wrap;
-            }
-            .trainer-actions button {
-                flex: 1;
-                text-align: center;
-            }
-            /* WORK */
-            
-            .work-card {
-                padding: 16px;
-            }
-            .work-item {
-                font-size: 13px;
-            }
-            /* REVIEWS */
-            
-            .review-card {
-                padding: 16px;
-            }
-            .review-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .review-summary,
-            .review-item {
-                font-size: 12px;
-            }
-            /* Facebook iframe fix */
-            
-            .fb-wrap iframe {
-                max-width: 100% !important;
-            }
-        }
-        
-        .link-dark1 {
+   /* Nội dung giới hạn */
+.about-page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Banner full màn hình */
+.about-banner {
+  grid-column: 2 / 12;
+}
+
+.about-banner img {
+  width: 100%;
+  height: 35vw;      /* cao theo màn hình */
+  max-height: 400px;
+  object-fit: cover;
+}
+/* Câu chuyện */
+.about-story {
+  padding: 15px 0;
+}
+
+/* 3 cột dưới */
+.about-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px; /* giảm từ 30px xuống */
+}
+
+/* Cột giữa & phải xếp dọc */
+.middle-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Bỏ hết padding lớn */
+.process,
+.about-me,
+.contact,
+.fanpage,
+.image-box {
+  padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .about-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 18px;              /* khoảng cách giữa icon */
+  font-size: 18px;
+}
+
+.link-dark1 {
             color: #1e3f3f;
         }
         
         .neon-hover {
             font-weight: 600;
+            font-family:'Space Mono'; 
             color: #1e3f3f;
             cursor: pointer;
             transition: color 0.25s ease;
@@ -881,129 +700,57 @@
             <div class="menu-toggle" style="font-size: xx-large;" onclick="toggleMenu()">☰</div>
         </div>
 
+<br><br>
+<div class="about-banner">
+    <img src="https://i.pinimg.com/736x/a8/74/dd/a874dd9bcc954a293067cebe7a0b11bf.jpg" alt="About Armonia Excursions">
+  </div>
+<section class="about-page">
+  <!-- Banner -->
+  <!-- Câu chuyện -->
+  <div class="about-story">
+    <h2>Bạn bắt đầu chơi xe mô hình từ đâu?</h2>
+      <p>
+        Riêng tui thì khởi đầu từ những con xe trông hợp mắt chỉ lẻ tẻ vài con tùy hứng cho đến 1 ngày, khi vận may đã đến khi săn được hotwheels STH mình đã được biết nhiều hơn 1 chút về nó qua bạn chơi, và đó là khởi đầu thật sự để mình chơi xe, và từ hotwheels mình cũng bắt đầu chơi thêm vài hãng mô hình nữa để đa dạng bst hơn.
+      </p>
+  </div>
 
-        <section class="about-layout">
-            <div class="about-wrap">
+  <!-- 3 cột dưới -->
+  <div class="about-bottom">
 
-                <!-- TOP -->
-                <div class="about-top">
+    <div class="process">
+      <h3>Hành trình</h3>
+      <p><b>2023:</b> bắt đầu sưu tập.<br><b>2024 - 2025:</b> ý tưởng đưa toàn bộ xe mình có lên web dạng bst số.<br><b>2025 - NAY:</b> định hướng mới, mục tiêu phát triển <b>SGR Collectibles</b><br> Coming soon...</p>
+    </div>
 
-                    <!-- TRAINER INFO -->
-                    <div class="trainer-card">
-                        <h3 class="card-title">Tác giả</h3>
+    <div class="middle-column">
+      <div class="about-me">
+        <h3>Về tôi</h3>
+        <strong title="đừng tò mò 🤣" onclick="toggleAudio()" class="neon-hover">Huynh Pham Vinh An</strong>
+        <p>Sinh Viên<br>Cao Đẳng FPT PoLYTECHNIC</p>
+      </div>
 
-                        <div class="trainer-body">
-                            <img class="trainer-avatar" onclick="toggleAudio()" src="./img/avt-ad.png" alt="trainer" title="đếch quan tâm 🤣.">
+      <div class="contact">
+        <h3>Liên hệ</h3>
+        <p style="font-size: small;">Email: vinhanhuynhpham@gmail.com</p>
+      </div>
+    </div>
 
-                            <div class="trainer-info">
-                                <div class="trainer-name">
-                                    <strong title="SV TKĐH Cao Đẳng FPT POLYTECHNIC." class="neon-hover">Huynh Pham Vinh An</strong>
-                                    <div class="icons">
-                                        <a href="https://www.facebook.com/vinhan.huynhpham.1" class="link-dark"><i class="bi bi-facebook link-dark1"></i></a>
-                                        <a href="https://www.instagram.com/vinh_an_huynh_pham_001/" class="link-dark"><i class="bi bi-instagram link-dark1"></i></a>
-                                        <a href="https://zalo.me/0944835045" class="link-dark"><i class="bi bi-telephone-fill link-dark1"></i></a>
+    <div class="right-column">
+      <div class="fanpage">
+        <div class="feature-card feature-image">
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v25.0&appId=APP_ID"></script>
+<div class="fb-page" data-href="https://www.facebook.com/saigonrace/" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/saigonrace/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/saigonrace/">SGR Collectibles</a></blockquote>
+      </div>
 
-                                    </div>
-                                </div>
+      <div class="image-box">
+        <h3>Ảnh</h3>
+      </div>
+    </div>
 
-                                <p class="trainer-mail">vinhanhuynhpham@email.com</p>
+  </div>
 
-
-                                <div class="trainer-stats">
-                                    <div><strong>+3</strong><span>Năm</span>
-                                    </div>
-                                    <div><strong>#1</strong><span>lưu trữ</span>
-                                    </div>
-                                    <div><strong>59</strong><span>Tổng số xe trong BST </span>
-                                    </div>
-                                    <div><strong>5</strong><span>brands đang sưu tập</span>
-                                    </div>
-                                </div>
-
-                                <p class="trainer-desc">
-                                    Sinh viên chuyên ngành TKĐH [Cao Đẳng FPT POLYTECHNIC]
-                                </p>
-
-                                <div class="trainer-actions">
-                                    <button class="dark" onclick="location.href='contact-bst.html'">Contact</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- WORK EXPERIENCE -->
-                    <div class="work-card">
-                        <h3 class="card-title">Hành trình</h3>
-
-                        <div class="work-item">
-                            <strong>Bắt đầu sưu tập</strong>
-                            <span>2023 – nay</span>
-                        </div>
-
-                        <div class="work-item">
-                            <strong>Đưa lên web</strong>
-                            <span>2024</span>
-                        </div>
-
-                        <div class="work-item">
-                            <strong>Tạo SGR Collectibles</strong>
-                            <span>2024 - nay</span>
-                        </div>
-
-                        <div class="work-item">
-                            <strong>Coming soon...</strong>
-                            <span>None</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- REVIEWS -->
-                <div class="review-card">
-                    <div class="review-header">
-                        <h3>Thông tin phụ</h3>
-
-                    </div>
-
-                    <div class="review-grid">
-
-                        <!-- FACEBOOK PAGE = CỘT 1 -->
-                        <div class="review-summary fb-wrap">
-                            <div id="fb-root"></div>
-                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v24.0&appId=APP_ID"></script>
-                            <div class="fb-page" data-href="https://www.facebook.com/saigonrace" data-tabs="" data-width="400" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/saigonrace" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/saigonrace">SGR Collectibles</a>
-                                </blockquote>
-                            </div>
-                        </div>
-
-                        <!-- REVIEW 2 -->
-                        <div class="review-item">
-                            <strong>Bản Update</strong>
-                            <span>▲ 1.1</span>
-                            <p>update lần cuối vào 14/01/2026</p>
-                        </div>
-
-                        <!-- REVIEW 3 -->
-                        <div class="review-item">
-                            <strong>Triển khai</strong>
-                            <span>Vercel</span>
-                            <p>None.</p>
-                        </div>
-
-                        <!-- REVIEW 4 -->
-                        <div class="review-item">
-                            <strong>Khác</strong>
-                            <span>★ </span>
-                            <p>None.</p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </section>
+</section>
 
 
 
