@@ -934,7 +934,39 @@
         // Cập nhật ngay khi trang được tải
         updateClock();
     </script>
+    <script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const counters = entry.target.querySelectorAll("strong");
 
+      counters.forEach(counter => {
+        const target = +counter.innerText;
+        counter.innerText = "0";
+        const duration = 2500;
+        const startTime = performance.now();
+
+        function animate(time) {
+          const progress = Math.min((time - startTime) / duration, 1);
+          counter.innerText = Math.floor(progress * target);
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            counter.innerText = target;
+          }
+        }
+
+        requestAnimationFrame(animate);
+      });
+
+      observer.unobserve(entry.target);
+    }
+  });
+});
+
+observer.observe(document.querySelector(".sgr-info-stats"));
+</script>
     <script src="https://cdn.counter.dev/script.js" data-id="f457645d-3cd5-4919-8a2f-f3d87d6234f1" data-utcoffset="7"></script>
     <script src="https://plugin-code.salesmartly.com/js/project_514093_530078_1761838458.js"></script>
 </body>
