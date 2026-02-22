@@ -280,21 +280,26 @@
         }
         
         @media (max-width: 768px) {
-            .sgr-info-panel {
-                grid-template-columns: 1fr;
-                justify-items: center;
-            }
-            .sgr-info-right {
-                display: none;
-            }
-            .sgr-info-left {
-                max-width: 520px;
-            }
-            .sgr-info-stats {
-                transform: scale(0.85);
-                transform-origin: left top;
-            }
-        }
+    .sgr-info-panel {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 0 16px; /* thêm cái này */
+    }
+
+    .sgr-info-right {
+        display: none;
+    }
+
+    .sgr-info-left {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .sgr-info-stats {
+        transform: scale(0.9);
+        transform-origin: center top; /* sửa ở đây */
+    }
+}
         
         .sgr-typing {
             font-size: 22px;
@@ -490,6 +495,11 @@
                 max-width: 100%;
             }
         }
+
+        .stats-wrapper {
+    display: flex;
+    justify-content: center;
+}
         /* ===== SGR Collectibles LCD ZONE ===== */
         
         .sgr-lcd {
@@ -737,7 +747,8 @@
             </div>
 
         </section>
-        <section class="sgr-info-panel container">
+        <section class="stats-wrapper">
+        <div class="sgr-info-panel container">
 
             <div class="sgr-info-left">
                 <h2 class="sgr-info-title">SGR Collectibles <b style="font-size: medium;">là gì?</b></h2>
@@ -766,8 +777,8 @@
                 <img src="./img/card-hw.png" alt="collection illustration">
             </div>
 
+        </div>
         </section>
-
 
 
     </section>
