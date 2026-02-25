@@ -567,16 +567,21 @@
         /* ===== REC LABEL ===== */
         
         .sgr-rec-label {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #1e3f3f;
-            background: rgba(255, 255, 255, .5);
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e3f3f;
+    padding: 2px 6px;
+    border-radius: 3px;
+
+    animation: recBlink 1s infinite;
+}
+@keyframes recBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
         /* ===== CLOCK ===== */
         
         .sgr-clock {
