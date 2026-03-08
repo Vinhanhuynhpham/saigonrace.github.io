@@ -1,12 +1,12 @@
 const countryCodeMap = {
     // Tiếng Việt
     "Việt Nam": "VIE", "Nhật": "JPN", "Nhật Bản": "JPN", "Hàn": "KOR", "Hàn Quốc": "KOR",
-    "Thái": "THA", "Thái Lan": "THA", "Trung": "CHN", "Trung Quốc": "CHN",
+    "Thái": "THA", "Thái Lan": "THA", "Trung": "CHN", "Trung Quốc": "CHN", "Hong Kong": "HKG",
     // Tiếng Anh
     "Vietnam": "VIE", "Japan": "JPN", "South Korea": "KOR", "Thailand": "THA", "China": "CHN",
     "United States": "USA", "USA": "USA", "Germany": "GER", "Italy": "ITA", "France": "FRA",
     "UK": "ENG", "England": "ENG", "Malaysia": "MAS", "Indonesia": "IDN",
-    "Brazil": "BRA", "Mexico": "MEX", "India": "IND"
+    "Brazil": "BRA", "Mexico": "MEX", "India": "IND", "Hong Kong": "HKG"
   };
 
   function normalizeOriginKey(origin) {
