@@ -648,6 +648,12 @@
                 height: 28px
             }
         }
+        .sub-line{
+    font-size: 12px;     /* nhỏ hơn dòng chính */
+    opacity: 0.7;        /* nhạt hơn */
+    display: block;      /* xuống dòng riêng */
+    margin-top: 4px;     /* cách dòng trên một chút */
+}
     </style>
 </head>
 
@@ -761,7 +767,7 @@
                 <h2 class="sgr-info-title">SGR Collectibles <b style="font-size: medium;">là gì?</b></h2>
 
                 <p class="sgr-info-desc">
-                    SGR Collectibles Collectibles là bộ sưu tập xe mô hình cá nhân, tập trung vào diecast, chủ yếu show xe là chính và trong định hướng tới sẽ bao gồm thanh lý xe cũ và bán sản phẩm mới (nhập hàng về).
+                    SGR Collectibles Collectibles là bộ sưu tập xe mô hình cá nhân, tập trung vào diecast, Và diecast 1:64 gần như chiếm spotlight trong bst, ngoài ra vẫn còn các tỉ lệ khác như 1:18, 1:43,... trong hướng đi mới SGR sẽ nhập xe về bán cũng như thanh lý xe đã chơi với giá phù hợp với mục đích custom mới hay tùy mục đích người chơi! Vậy nên bạn sẽ luôn thấy bst xe có thay đổi thường xuyên chủ yếu từ HW do đấy là dòng sưu tập chính của tui ngoài mấy brand khác. Hiện chưa sẵn sàng phục vụ các Giao dịch trao đổi, buôn bán nên vẫn sẽ thiên về việc chia sẻ bst của mình qua web thay cho việc offline.
                 </p>
 
                 <div class="sgr-info-stats">
@@ -796,7 +802,7 @@
             <div class="footer-brand">
                 <strong style="font-size: medium;">SGR Collectibles</strong> 1:64 Die-cast Collection · bộ sưu tập xe mô hình 1:64
                 <div class="copyright">
-                    © 2024 SGR Collectibles.
+                    SINCE 2024 <b>by</b> SGR Collectibles.
                 </div>
             </div>
 
@@ -837,7 +843,8 @@
     </script>
     <script>
         const text = "Chào mừng bạn đến xem bộ sưu tập của tôi";
-
+        const subText = "Cập nhập lần cuối vào ngày 08-03-2026.";
+        
         const holidays = [{
             date: '01-01',
             message: 'Chúc Mừng Năm Mới!'
@@ -894,21 +901,33 @@
             const holiday = holidays.find(h => h.date === todayKey);
 
             const finalText = holiday ? `${text} - ${holiday.message}` : `${text} - Hôm nay là ngày ${day}/${month}/${year}. chúc bạn may mắn!`;
+            
+            
 
             let i = 0;
 
-            function typeChar() {
-                if (i < finalText.length) {
-                    typingEl.insertBefore(
-                        document.createTextNode(finalText[i]),
-                        cursor
-                    );
-                    i++;
-                    setTimeout(typeChar, 80);
-                }
-            }
+function typeChar() {
+    if (i < finalText.length) {
+        typingEl.insertBefore(
+            document.createTextNode(finalText[i]),
+            cursor
+        );
+        i++;
+        setTimeout(typeChar, 80);
+    } else {
 
-            typeChar();
+        const br = document.createElement("br");
+        typingEl.appendChild(br);
+
+        const subLine = document.createElement("span");
+        subLine.className = "sub-line";
+        subLine.textContent = subText;
+
+        typingEl.appendChild(subLine);
+    }
+}
+
+typeChar();
         }
     </script>
 
