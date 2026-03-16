@@ -33,7 +33,7 @@ function showCarInfo(
       <strong>Số lượng:</strong> ${quantity || 1}<br>
 
       <strong>Giá gốc:</strong> ${(originalPrice && originalPrice.trim() !== '') ? originalPrice + '.VND' : '69.000.VND'}<br>
-      <strong>Giá:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
+      <strong>Bán:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
 
       <strong>Mã số:</strong> <span id="carCodeText">${code}</span>
       <button onclick="copyToClipboard('${code}')" 
