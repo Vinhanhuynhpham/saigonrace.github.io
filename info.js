@@ -51,7 +51,7 @@ const countryCodeMap = {
         <strong>Thông tin phụ:</strong> ${additionalInfo || 'Không có thông tin'}<br>
         <strong>Số lượng:</strong> ${quantity || 1}<br>
       <strong>Giá gốc:</strong> ${(originalPrice && originalPrice.trim() !== '') ? originalPrice + '.VND' : '0.VND'}<br>
-        <strong>Giá:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
+        <strong>Bán:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
         <strong>Mã số:</strong> <span id="carCodeText">${code}</span>
         <button onclick="copyToClipboard('${code}')" style="margin-left: 8px;" class="btn btn-sm btn-outline-dark">
           <i class="bi bi-clipboard-fill"></i> Sao chép
