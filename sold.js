@@ -29,7 +29,7 @@ function showCarInfo(
       <strong>Thông tin phụ:</strong> ${additionalInfo && additionalInfo.trim() !== '' ? additionalInfo : 'Không có thông tin'}<br>
       <strong>Số lượng:</strong> ${quantity || 1}<br>
       <strong>Giá gốc:</strong> ${(originalPrice && originalPrice.trim() !== '') ? originalPrice + '.VND' : '0.VND'}<br>
-      <strong>Giá:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
+      <strong>Bán:</strong> ${(price && price.trim() !== '') ? price + '.VND' : '0.VND'}<br>
       <strong>Người mua:</strong> ${buyer && buyer.trim() !== '' ? buyer : 'none'}
     </div>
   `;
