@@ -586,30 +586,40 @@
             <source src="./img/audio/windows-startup-crash.mp3" type="audio/mpeg">
         </audio>
         <script>
-            let isPlaying = false;
+    let isPlaying = false;
 
-            function toggleAudio2() {
-                const audio = document.getElementById("warningSound");
-                const targetPage = "bm.html"; // Thay tên trang bạn muốn chuyển đến vào đây
+    function toggleAudio2() {
+        const audio = document.getElementById("warningSound");
+        const targetPage = "bm.html"; 
 
-                if (isPlaying) {
-                    audio.pause();
-                    // Nếu bạn muốn dừng phát là hủy luôn việc chuyển trang thì có thể xóa dòng dưới:
-                    audio.onended = null;
-                } else {
-                    audio.play().then(() => {
-                        // THIẾT LẬP: Khi âm thanh kết thúc sẽ tự động chuyển trang
-                        audio.onended = function() {
-                            window.location.href = targetPage;
-                        };
-                    }).catch(err => {
-                        console.log("Audio play bị chặn:", err);
-                    });
-                }
+        // 1. ĐỔI TITLE NGAY LẬP TỨC (Bấm là hiện liền)
+        document.title = "☢️ Tự hủy!";
 
-                isPlaying = !isPlaying;
-            }
-        </script>
+        if (isPlaying) {
+            audio.pause();
+            audio.onended = null;
+            // Nếu dừng nhạc thì trả lại Title cũ (tùy chọn)
+            document.title = "SGR Collectibles_404"; 
+        } else {
+            // 2. Thêm một chút delay nhẹ để đổi nội dung title kịch tính hơn trong lúc nhạc chạy
+            setTimeout(() => {
+                if(!audio.paused) document.title = "load...";
+            }, 1500);
+
+            audio.play().then(() => {
+                audio.onended = function() {
+                    window.location.href = targetPage;
+                };
+            }).catch(err => {
+                console.log("Audio play bị chặn:", err);
+                // Nếu trình duyệt chặn nhạc, vẫn cho chuyển trang sau 2s để không bị đơ
+                setTimeout(() => { window.location.href = targetPage; }, 2000);
+            });
+        }
+
+        isPlaying = !isPlaying;
+    }
+</script>
         <script>
             const audio = document.getElementById("bgMusic");
 
