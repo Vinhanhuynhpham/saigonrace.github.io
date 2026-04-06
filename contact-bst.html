@@ -918,97 +918,94 @@ textarea {
         overlay.onclick = toggleMenu;
     </script>
     <script>
-    // Đảm bảo toàn bộ HTML đã load xong mới chạy JS
-    window.addEventListener('DOMContentLoaded', (event) => {
-        
-        // 1. KHAI BÁO BIẾN (Chỉ khai báo 1 lần duy nhất)
-        let isTrollDone = false;
-        const sgrForm = document.getElementById("supportForm");
-        const sgrSubmitBtn = document.getElementById("mainSubmitBtn");
-        const sgrCaptcha = document.getElementById("captchaWrapper");
-        const sgrOverlay = document.getElementById("overlay-troll");
-        const sgrCheckbox = document.getElementById("realCaptcha");
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Khai báo biến với ID chuẩn SGR
+    const sgrForm = document.getElementById("supportForm");
+    const sgrBtn = document.getElementById("mainSubmitBtn");
+    const sgrOverlay = document.getElementById("overlay-troll");
+    const sgrCaptcha = document.getElementById("captchaWrapper");
+    const sgrCheck = document.getElementById("realCaptcha");
+    
+    let isTrollDone = false;
 
-        // 2. XỬ LÝ SUBMIT
-        if (sgrForm) {
-            sgrForm.addEventListener("submit", function(e) {
-                e.preventDefault();
+    // 2. Xử lý Submit
+    if (sgrForm) {
+        sgrForm.addEventListener("submit", function(e) {
+            e.preventDefault(); 
 
-                if (!isTrollDone) {
-                    // Kích hoạt Troll
-                    if (sgrOverlay) sgrOverlay.style.display = 'block';
-                    if (sgrSubmitBtn) sgrSubmitBtn.style.display = 'none';
-                    if (sgrCaptcha) {
-                        sgrCaptcha.classList.add('captcha-active');
-                        sgrCaptcha.style.display = 'flex';
-                    }
-                } else {
-                    // Gửi thật lên SheetDB
-                    performActualSubmit(this);
+            if (!isTrollDone) {
+                // Kích hoạt Troll DNA
+                if (sgrOverlay) sgrOverlay.style.display = "block";
+                if (sgrBtn) sgrBtn.style.display = "none";
+                if (sgrCaptcha) {
+                    sgrCaptcha.style.display = "flex";
+                    sgrCaptcha.classList.add("captcha-active");
                 }
-            });
-        }
+            } else {
+                // Đã troll xong -> Gửi thật
+                performSGRSubmit(this);
+            }
+        });
+    }
 
-        // 3. HÀM CHẠY TROLL (Gán trực tiếp vào checkbox để tránh lỗi undefined)
-        if (sgrCheckbox) {
-            sgrCheckbox.onchange = function() {
-                const txt = document.querySelector('.captcha-text');
-                const audio1 = document.getElementById("warningSound");
-                const audio2 = document.getElementById("gaySound");
+    // 3. Logic Checkbox Troll (Kết quả GAY)
+    if (sgrCheck) {
+        sgrCheck.onchange = function() {
+            const txt = document.querySelector('.captcha-text');
+            const a1 = document.getElementById("warningSound");
+            const a2 = document.getElementById("gaySound");
 
-                this.disabled = true;
-                if (txt) txt.innerText = "Đang xác nhận...";
-                if (audio1) audio1.play().catch(() => {});
+            this.disabled = true;
+            if (txt) txt.innerText = "Đang Xác nhận...";
+            if (a1) a1.play().catch(() => {});
+
+            setTimeout(() => {
+                if (a1) { a1.pause(); a1.currentTime = 0; }
+                if (a2) a2.play().catch(() => {});
+
+                if (txt) {
+                    txt.innerText = "Đã xác nhận: bạn bị GAY!";
+                    txt.style.color = "#ff4444";
+                    txt.style.fontWeight = "bold";
+                }
 
                 setTimeout(() => {
-                    if (audio1) { audio1.pause(); audio1.currentTime = 0; }
-                    if (audio2) audio2.play().catch(() => {});
+                    alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
+                    isTrollDone = true;
+                    if (sgrOverlay) sgrOverlay.style.display = "none";
+                    if (sgrCaptcha) sgrCaptcha.style.display = "none";
+                    if (sgrBtn) sgrBtn.style.display = "flex";
+                }, 1500);
+            }, 3000);
+        };
+    }
 
-                    if (txt) {
-                        txt.innerText = "Đã xác nhận: bạn bị GAY!";
-                        txt.style.color = "#ff4444";
-                        txt.style.fontWeight = "bold";
-                    }
+    // 4. Hàm gửi dữ liệu lên Google Script (GAS)
+    function performSGRSubmit(formElement) {
+        const formData = new FormData(formElement);
+        const dataObj = {};
+        formData.forEach((value, key) => dataObj[key] = value);
 
-                    setTimeout(() => {
-                        alert("Đã xong: Bạn ko có lỗi, đó là tính năng! nhấn 'OK' để tiếp tục.");
-                        isTrollDone = true;
+        if (sgrBtn) sgrBtn.style.opacity = "0.5";
 
-                        // Dọn dẹp giao diện troll
-                        if (sgrOverlay) sgrOverlay.style.display = 'none';
-                        if (sgrCaptcha) {
-                            sgrCaptcha.classList.remove('captcha-active');
-                            sgrCaptcha.style.display = 'none';
-                        }
-                        if (sgrSubmitBtn) sgrSubmitBtn.style.display = 'flex';
-                    }, 1500);
-                }, 3000);
-            };
-        }
+        // THAY LINK /exec CỦA AN VÀO ĐÂY
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxonh-5jyfVAY5HfQ8fHBOWcpGWub0pmAhSnRzTcYPekS4R5TiHAACEt-3r2RfMSnnh/exec"; 
 
-        // 4. HÀM GỬI DỮ LIỆU THẬT
-        function performActualSubmit(formElement) {
-            const data = new FormData(formElement);
-            const obj = {};
-            data.forEach((value, key) => obj[key] = value);
-
-            if (sgrSubmitBtn) sgrSubmitBtn.style.opacity = "0.5";
-
-            fetch("https://sheetdb.io/api/v1/j4et8mhuxia95", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: obj })
-            })
-            .then(res => {
-                if (res.ok) window.location.href = "pass-bst.html";
-                else alert("Lỗi gửi dữ liệu!");
-            })
-            .catch(err => {
-                console.error(err);
-                alert("Lỗi kết nối Server!");
-            });
-        }
-    });
+        fetch(scriptURL, {
+            method: "POST",
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: dataObj })
+        })
+        .then(() => {
+            window.location.href = "pass-bst.html";
+        })
+        .catch(err => {
+            console.error("Lỗi SGR:", err);
+            alert("Lỗi kết nối Server!");
+        });
+    }
+});
 </script>
     <script>
         function toggleMenu() {
