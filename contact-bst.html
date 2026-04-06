@@ -971,17 +971,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 setTimeout(() => {
     alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
-    isTrollDone = true; // Đánh dấu đã troll xong
+    
+    isTrollDone = true; // Đánh dấu đã vượt qua bài test DNA
 
-    // Ẩn toàn bộ màn hình troll
+    // 1. Ẩn toàn bộ giao diện Troll
     if (sgrOverlay) sgrOverlay.style.display = 'none';
     if (sgrCaptcha) sgrCaptcha.style.display = 'none';
-    
-    // Hiện lại nút Submit và TỰ ĐỘNG kích hoạt gửi dữ liệu
-    if (sgrBtn) {
-        sgrBtn.style.display = 'flex';
-        // Tự động kích hoạt submit luôn cho chuyên nghiệp
-        sgrForm.requestSubmit(); 
+    if (sgrBtn) sgrBtn.style.display = 'flex';
+
+    // 2. TỰ ĐỘNG GỬI LUÔN (Không bắt user bấm Submit lần 2)
+    if (sgrForm) {
+        // Gọi thẳng hàm gửi dữ liệu mà không cần đợi click
+        performSGRSubmit(sgrForm); 
     }
 }, 1500);
             }, 3000);
