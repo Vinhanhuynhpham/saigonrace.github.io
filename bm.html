@@ -153,8 +153,7 @@
             user-select: none;
         }
         .captcha-logo img {
-            width: 24px;
-            height: 24px;
+            width: 44px;
             margin-bottom: 2px;
         }
 
@@ -204,10 +203,10 @@
         <input type="checkbox" id="realCaptcha" onchange="runTheTroll()">
         
         <label for="realCaptcha" class="fake-checkbox"></label>
-        <span class="captcha-text">Im gay!</span>
+        <span class="captcha-text">Im not gay!</span>
 
         <div class="captcha-logo">
-            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA logo">
+            <img src="./img/rcc.png" alt="reCAPTCHA logo">
             <span>reCAPTCHA</span>
         </div>
     </div>
@@ -227,51 +226,63 @@
         <audio id="warningSound" preload="auto">
             <source src="./img/audio/loading-icon.mp3" type="audio/mpeg">
         </audio>
+        <audio id="warningSound2" preload="auto">
+            <source src="./img/audio/gey-echo.mp3" type="audio/mpeg">
+        </audio>
 
         <script>
-    let isPlaying = false;
-
     function runTheTroll() {
-            const checkbox = document.getElementById("realCaptcha");
-            const audio = document.getElementById("warningSound");
+        const checkbox = document.getElementById("realCaptcha");
+        const audio1 = document.getElementById("warningSound");
+        const audio2 = document.getElementById("warningSound2");
+        const captchaText = document.querySelector('.captcha-text');
 
-            // Chỉ chạy khi người dùng tick vào (checked == true)
-            if (checkbox.checked) {
-                console.log("Kích hoạt Troll: Đã phát hiện bạn bị gay!");
+        if (checkbox.checked) {
+            console.log("Bắt đầu quá trình quét...");
 
-                // 1. Kịch tính hóa giao diện
-                document.title = "Đang xác thực...";
-                document.body.style.backgroundColor = "#1e3f3f"; // Đổi màu nền sang đỏ tối cho sợ
-                document.querySelector('.captcha-container').style.boxShadow = "0 0 20px 5px rgba(30, 63, 63)";
+            // --- GIAI ĐOẠN 1: ĐANG QUÉT (0s - 3s) ---
+            document.title = "Kiểm tra...";
+            captchaText.innerText = "Đang kiểm tra..."; 
+            
+            audio1.play().catch(err => console.log("Audio 1 bị chặn"));
 
-                // 2. Chạy nhạc
-                audio.play().then(() => {
-                    // Khi nhạc kết thúc (onended), mới thực thi lệnh tắt tab
-                    audio.onended = function() {
-                        finishTheTroll();
+            // --- GIAI ĐOẠN 2: BIẾN BIẾN! (Tại giây thứ 3) ---
+            setTimeout(() => {
+                // Tắt nhạc 1
+                audio1.pause();
+                audio1.currentTime = 0;
+
+                // Thay đổi nội dung cực gắt
+                document.title = "Đã kiểm tra! Bạn GAY!";
+                captchaText.innerText = "Bạn là GAY!!!";
+                captchaText.style.color = "#ff4444";
+                captchaText.style.fontWeight = "bold";
+
+                // Phát nhạc 2 (Nhạc troll chính)
+                audio2.play().then(() => {
+                    // Khi nhạc 2 chạy hết thì mới kết thúc
+                    audio2.onended = function() {
+                        captchaText.innerText = "Đang chuyển hướng...";
+                        setTimeout(finishTheTroll, 500);
                     };
                 }).catch(err => {
-                    // Nếu trình duyệt chặn nhạc, sau 2.5s vẫn cố gắng tắt
-                    console.log("Nhạc bị chặn, chuyển sang bước tắt tab sau 2.5s...");
-                    setTimeout(finishTheTroll, 2500);
+                    // Nếu trình duyệt chặn nhạc 2, đợi thêm 2s rồi tự đóng
+                    console.log("Audio 2 bị chặn");
+                    setTimeout(finishTheTroll, 2000);
                 });
-            } else {
-                // (Tùy chọn) Nếu họ un-tick thì reset lại mọi thứ (hiếm khi xảy ra)
-                // audio.pause();
-                // document.title = "Xác minh Danh tính";
-                // document.body.style.backgroundColor = "#f9f9f9";
-            }
-        }
 
-        // Hàm cuối cùng để đóng tab hoặc chuyển hướng
-        function finishTheTroll() {
-            // Cách 1: Cố gắng đóng tab (nhớ điều kiện cần tab mở bằng window.open)
-            window.open('', '_self', ''); 
-            window.close();
-
-            // Cách 2: Chuyển sang một trang trắng tinh (hiệu quả nếu Cách 1 bị chặn)
-            window.location.href = "https://www.google.com/webhp";
+            }, 3000); // 3000ms = 3 giây đúng ý bạn nhé
         }
+    }
+
+    function finishTheTroll() {
+        // Cố gắng đóng tab (Mẹo lách luật trình duyệt)
+        window.open('', '_self', ''); 
+        window.close();
+
+        // Backup nếu không đóng được thì đá sang Google
+        window.location.href = "https://www.youtube.com/shorts/tqFZ3fUsGTs";
+    }
 </script>
     </section>
 
