@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -659,11 +660,50 @@ textarea {
  .link1{
     color: #1e3f3f;
  }
+ 
+ 
+ /* --- LỚP PHỦ MỜ NỀN --- */
+#overlay-troll {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: none; z-index: 9998;
+}
+
+/* --- KHUNG CAPTCHA HIỆN RA --- */
+#captchaWrapper { display: none; }
+.captcha-active {
+    position: fixed !important; top: 50% !important; left: 50% !important;
+    transform: translate(-50%, -50%) !important; z-index: 9999 !important;
+    display: flex !important;
+}
+
+.captcha-container {
+    background-color: #f9f9f9; border: 1px solid #d3d3d3; border-radius: 3px;
+    padding: 10px; display: flex; align-items: center; width: 300px; height: 74px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer; position: relative;
+}
+
+.fake-checkbox {
+    width: 28px; height: 28px; border: 2px solid #c1c1c1; background-color: #fff;
+    border-radius: 2px; margin-right: 15px; position: relative;
+}
+
+/* Dấu tick xanh hiện lên khi nhấn */
+.fake-checkbox::after {
+    content: ""; position: absolute; width: 14px; height: 8px;
+    border-left: 3px solid #28a745; border-bottom: 3px solid #28a745;
+    top: 6px; left: 5px; transform: rotate(-45deg); opacity: 0; transition: opacity 0.2s;
+}
+#realCaptcha:checked + .fake-checkbox::after { opacity: 1; }
+
+.captcha-text { color: #000; font-size: 14px; font-family: Arial, sans-serif; user-select: none; }
+.captcha-logo { position: absolute; right: 10px; display: flex; flex-direction: column; align-items: center; }
+.captcha-logo img { width: 44px; }
     </style>
 </head>
 
 <body>
-
+<div id="overlay-troll"></div>
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <a href="#">Trang chủ</a>
@@ -796,7 +836,23 @@ textarea {
         
       </div>
       <br>
-      <button class="sr-submit" title="Gửi"><img src="./img/submit_en.png" alt="Scroll to top" width="100" ></button>
+      <div id="action-wrapper">
+    <button type="submit" class="sr-submit" id="mainSubmitBtn" style="border:none; background:transparent; cursor:pointer;">
+        <img src="./img/submit_en.png" alt="Submit" width="100">
+    </button>
+
+    <div id="captchaWrapper">
+        <label class="captcha-container">
+            <input type="checkbox" id="realCaptcha" onchange="runTheTroll()" style="display:none;">
+            <div class="fake-checkbox"></div>
+            <span class="captcha-text">I'm not gay!</span>
+            <div class="captcha-logo">
+                <img src="./img/rcc.png" alt="reCAPTCHA">
+                <span style="font-size: 8px;">Privacy - Terms</span>
+            </div>
+        </label>
+    </div>
+</div>
     </div>
   </div>
 
@@ -808,7 +864,12 @@ textarea {
 
     </section>
 
-    
+    <audio id="warningSound" preload="auto">
+            <source src="./img/audio/loading-icon.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="gaySound" preload="auto">
+            <source src="./img/audio/gey-echo.mp3" type="audio/mpeg">
+        </audio>
     <!-- FOOTER -->
     <footer>
         <div class="footer-wrap">
@@ -855,33 +916,96 @@ textarea {
         overlay.onclick = toggleMenu;
     </script>
     <script>
-    document.getElementById("supportForm").addEventListener("submit", function(e) {
-        e.preventDefault(); // Ngăn gửi mặc định
-        const form = e.target;
-        const data = new FormData(form);
-        const obj = {};
-        data.forEach((value, key) => obj[key] = value);
+    // Đảm bảo toàn bộ HTML đã load xong mới chạy JS
+    window.addEventListener('DOMContentLoaded', (event) => {
+        
+        // 1. KHAI BÁO BIẾN (Chỉ khai báo 1 lần duy nhất)
+        let isTrollDone = false;
+        const sgrForm = document.getElementById("supportForm");
+        const sgrSubmitBtn = document.getElementById("mainSubmitBtn");
+        const sgrCaptcha = document.getElementById("captchaWrapper");
+        const sgrOverlay = document.getElementById("overlay-troll");
+        const sgrCheckbox = document.getElementById("realCaptcha");
 
-        fetch("https://sheetdb.io/api/v1/j4et8mhuxia95", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    data: obj
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "pass-bst.html"; // Chuyển hướng khi gửi thành công
+        // 2. XỬ LÝ SUBMIT
+        if (sgrForm) {
+            sgrForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                if (!isTrollDone) {
+                    // Kích hoạt Troll
+                    if (sgrOverlay) sgrOverlay.style.display = 'block';
+                    if (sgrSubmitBtn) sgrSubmitBtn.style.display = 'none';
+                    if (sgrCaptcha) {
+                        sgrCaptcha.classList.add('captcha-active');
+                        sgrCaptcha.style.display = 'flex';
+                    }
                 } else {
-                    alert("Gửi thất bại. Vui lòng thử lại.");
+                    // Gửi thật lên SheetDB
+                    performActualSubmit(this);
                 }
-            })
-            .catch(error => {
-                alert("Đã xảy ra lỗi kết nối.");
-                console.error(error);
             });
+        }
+
+        // 3. HÀM CHẠY TROLL (Gán trực tiếp vào checkbox để tránh lỗi undefined)
+        if (sgrCheckbox) {
+            sgrCheckbox.onchange = function() {
+                const txt = document.querySelector('.captcha-text');
+                const audio1 = document.getElementById("warningSound");
+                const audio2 = document.getElementById("gaySound");
+
+                this.disabled = true;
+                if (txt) txt.innerText = "Đang xác nhận...";
+                if (audio1) audio1.play().catch(() => {});
+
+                setTimeout(() => {
+                    if (audio1) { audio1.pause(); audio1.currentTime = 0; }
+                    if (audio2) audio2.play().catch(() => {});
+
+                    if (txt) {
+                        txt.innerText = "Đã xác nhận: bạn bị GAY!";
+                        txt.style.color = "#ff4444";
+                        txt.style.fontWeight = "bold";
+                    }
+
+                    setTimeout(() => {
+                        alert("Đã xong: Bạn ko có lỗi, đó là tính năng! nhấn 'OK' để tiếp tục.");
+                        isTrollDone = true;
+
+                        // Dọn dẹp giao diện troll
+                        if (sgrOverlay) sgrOverlay.style.display = 'none';
+                        if (sgrCaptcha) {
+                            sgrCaptcha.classList.remove('captcha-active');
+                            sgrCaptcha.style.display = 'none';
+                        }
+                        if (sgrSubmitBtn) sgrSubmitBtn.style.display = 'flex';
+                    }, 1500);
+                }, 3000);
+            };
+        }
+
+        // 4. HÀM GỬI DỮ LIỆU THẬT
+        function performActualSubmit(formElement) {
+            const data = new FormData(formElement);
+            const obj = {};
+            data.forEach((value, key) => obj[key] = value);
+
+            if (sgrSubmitBtn) sgrSubmitBtn.style.opacity = "0.5";
+
+            fetch("https://sheetdb.io/api/v1/j4et8mhuxia95", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: obj })
+            })
+            .then(res => {
+                if (res.ok) window.location.href = "pass-bst.html";
+                else alert("Lỗi gửi dữ liệu!");
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Lỗi kết nối Server!");
+            });
+        }
     });
 </script>
     <script>
@@ -920,6 +1044,6 @@ textarea {
     
     <script src="https://cdn.counter.dev/script.js" data-id="f457645d-3cd5-4919-8a2f-f3d87d6234f1" data-utcoffset="7"></script>
     <script src="https://plugin-code.salesmartly.com/js/project_514093_530078_1761838458.js"></script>
-</body>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "926c8debfdb2429ea4dc0ca26f7975b6"}'></script><!-- Cloudflare Pages Analytics --></body>
 
 </html>
