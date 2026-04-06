@@ -280,26 +280,25 @@
         }
         
         @media (max-width: 768px) {
-    .sgr-info-panel {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        padding: 0 16px; /* thêm cái này */
-    }
-
-    .sgr-info-right {
-        display: none;
-    }
-
-    .sgr-info-left {
-        max-width: 520px;
-        margin: 0 auto;
-    }
-
-    .sgr-info-stats {
-        transform: scale(0.9);
-        transform-origin: center top; /* sửa ở đây */
-    }
-}
+            .sgr-info-panel {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                padding: 0 16px;
+                /* thêm cái này */
+            }
+            .sgr-info-right {
+                display: none;
+            }
+            .sgr-info-left {
+                max-width: 520px;
+                margin: 0 auto;
+            }
+            .sgr-info-stats {
+                transform: scale(0.9);
+                transform-origin: center top;
+                /* sửa ở đây */
+            }
+        }
         
         .sgr-typing {
             font-size: 22px;
@@ -495,11 +494,11 @@
                 max-width: 100%;
             }
         }
-
+        
         .stats-wrapper {
-    display: flex;
-    justify-content: center;
-}
+            display: flex;
+            justify-content: center;
+        }
         /* ===== SGR Collectibles LCD ZONE ===== */
         
         .sgr-lcd {
@@ -567,21 +566,25 @@
         /* ===== REC LABEL ===== */
         
         .sgr-rec-label {
-    position: absolute;
-    top: 10px;
-    left: 14px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #1e3f3f;
-    padding: 2px 6px;
-    border-radius: 3px;
-
-    animation: recBlink 1s infinite;
-}
-@keyframes recBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3f3f;
+            padding: 2px 6px;
+            border-radius: 3px;
+            animation: recBlink 1s infinite;
+        }
+        
+        @keyframes recBlink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.4;
+            }
+        }
         /* ===== CLOCK ===== */
         
         .sgr-clock {
@@ -648,12 +651,30 @@
                 height: 28px
             }
         }
-        .sub-line{
-    font-size: 12px;     /* nhỏ hơn dòng chính */
-    opacity: 0.7;        /* nhạt hơn */
-    display: block;      /* xuống dòng riêng */
-    margin-top: 4px;     /* cách dòng trên một chút */
-}
+        
+        .sub-line {
+            font-size: 12px;
+            /* nhỏ hơn dòng chính */
+            
+            opacity: 0.7;
+            /* nhạt hơn */
+            
+            display: block;
+            /* xuống dòng riêng */
+            
+            margin-top: 4px;
+            /* cách dòng trên một chút */
+        }
+        /* CSS để tạo hiệu ứng hover hiện menu thay vì phải click */
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        
+        .dropdown-item {
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -667,12 +688,12 @@
                 Bộ sưu tâp <i class="bi bi-caret-down-fill"></i><span>▾</span>
             </button>
             <div class="sidebar-sub">
-            <a href="bst-hw.html">Hotwheels</a>
-                        <a href="bst-m-box.html">Macthbox</a>
-            <a href="bst-tmc.html">Tomica</a>
-            <a href="bst-mjr.html">Majorette</a>
-            <a href="bst-p-race.html">Poprace</a>
-            <a href="bst-brg.html">Burago</a>
+                <a href="bst-hw.html">Hotwheels</a>
+                <a href="bst-m-box.html">Macthbox</a>
+                <a href="bst-tmc.html">Tomica</a>
+                <a href="bst-mjr.html">Majorette</a>
+                <a href="bst-p-race.html">Poprace</a>
+                <a href="bst-brg.html">Burago</a>
             </div>
         </div>
         <div class="sidebar-dropdown">
@@ -682,7 +703,7 @@
             <div class="sidebar-sub">
                 <a href="sale-bst.html">Sản phẩm</a>
                 <a href="tl-bst.html">Thanh lý</a>
-                        <a href="sold-bst.html">Sold/ Sold out</a>
+                <a href="sold-bst.html">Sold/ Sold out</a>
                 <a href="https://docs.google.com/spreadsheets/d/1VrywcS-HlmKHSEtWk7kA7-ZZyxMc9CjTkAMhlpKvMdw/edit?usp=sharing">Bảng đánh giá</a>
             </div>
         </div>
@@ -690,9 +711,9 @@
         <a href="about-bst.html">About</a>
         <br>
         <form class="nav-search" action="https://www.google.com/search" method="GET" target="_blank">
-                    <span class="search-icon">⌕</span>
-                    <input type="text" name="q" placeholder="Search Google…" required />
-                </form>
+            <span class="search-icon">⌕</span>
+            <input type="text" name="q" placeholder="Search Google…" required />
+        </form>
     </div>
 
     <section class="hero">
@@ -714,7 +735,7 @@
                         <a href="bst-tmc.html">Tomica</a>
                         <a href="bst-mjr.html">Majorette</a>
                         <a href="bst-p-race.html">Poprace</a>
-            <a href="bst-brg.html">Burago</a>
+                        <a href="bst-brg.html">Burago</a>
                     </div>
                 </div>
 
@@ -767,90 +788,90 @@
       ● để đảm bảo an toàn khi mua bạn có thể được xem trực tiếp sản phẩm trước khi quyết định và thanh toán! ● giao diện luôn được chỉnh sửa để đem đến trải nghiệm tốt cho người truy cập và cảm ơn bạn đã vào xem bst của mình!
     </span>
             </div>
-           <br>
-           <div class="container">
-    <div class="row align-items-md-stretch">
+            <br>
+            <div class="container">
+                <div class="row align-items-md-stretch">
 
-        <div class="col-md-6 mb-4 mb-md-0">
-            <div class="h-100 p-5 text-bg-dark rounded-3" style="background-image:url('https://i.pinimg.com/736x/d5/fe/13/d5fe13b22e06e9f15d75d8d2125540ff.jpg')">
-                <h2>Bộ sưu tập</h2>
-                <p>bạn có thể tham quan bộ sưu tập của tui và được đảm bảo xe mới sưu tập đều sẽ được cho lên kệ(Web).</p>
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="h-100 p-5 text-bg-dark rounded-3" style="background-image:url('https://i.pinimg.com/736x/d5/fe/13/d5fe13b22e06e9f15d75d8d2125540ff.jpg')">
+                            <h2>Bộ sưu tập</h2>
+                            <p>bạn có thể tham quan bộ sưu tập của tui và được đảm bảo xe mới sưu tập đều sẽ được cho lên kệ(Web).</p>
 
-                <div class="dropdown d-inline-block">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="btnLeft" onclick="handleGo('left')">
-                        Chọn hãng...
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Hotwheels', 'bst-hw.html')">Hotwheels</a>
-                        </li>
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Macthbox', 'bst-m-box.html')">Macthbox</a>
-                        </li>
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Tomica', 'bst-tmc.html')">Tomica</a>
-                        </li>
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Majorette', 'bst-mjr.html')">Majorette</a>
-                        </li>
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Poprace', 'bst-p-race.html')">Pop race</a>
-                        </li>
-                        <li><a class="dropdown-item" onclick="setLink('left', 'Burago', 'bst-brg.html')">Burago</a>
-                        </li>
-                    </ul>
+                            <div class="dropdown d-inline-block">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button" id="btnLeft" onclick="handleGo('left')">
+                                    Chọn hãng...
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Hotwheels', 'bst-hw.html')">Hotwheels</a>
+                                    </li>
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Macthbox', 'bst-m-box.html')">Macthbox</a>
+                                    </li>
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Tomica', 'bst-tmc.html')">Tomica</a>
+                                    </li>
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Majorette', 'bst-mjr.html')">Majorette</a>
+                                    </li>
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Poprace', 'bst-p-race.html')">Pop race</a>
+                                    </li>
+                                    <li><a class="dropdown-item" onclick="setLink('left', 'Burago', 'bst-brg.html')">Burago</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="h-100 p-5 rounded-3" style="background-image: url('./img/thumb-a2.png'); color: white !important;">
+                            <h2>Shop</h2>
+                            <p>Nơi bạn có thể mua xe cũ đc pass lại giá ổn với mọi mục đích.
+
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="btnRight" onclick="handleGo('right')">
+                                        Đi đến...
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" onclick="setLink('right', 'Sản phẩm', 'sale-bst.html')">Sản phẩm</a>
+                                        </li>
+                                        <li><a class="dropdown-item" onclick="setLink('right', 'Thanh lý', 'tl-bst.html')">Thanh lý</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-        
-        <div class="col-md-6 mb-4 mb-md-0">
-            <div class="h-100 p-5 rounded-3" style="background-color: #1e3f3f; color: white !important;">
-                <h2>Shop</h2>
-                <p>Nơi bạn có thể mua xe cũ đc pass lại giá ổn với mọi mục đích.
-
-                    <div class="dropdown d-inline-block">
-                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="btnRight" onclick="handleGo('right')">
-                            Đi đến...
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" onclick="setLink('right', 'Sản phẩm', 'sale-bst.html')">Sản phẩm</a>
-                            </li>
-                            <li><a class="dropdown-item" onclick="setLink('right', 'Thanh lý', 'tl-bst.html')">Thanh lý</a>
-                            </li>
-                        </ul>
-                    </div>
-            </div>
-        </div>
-
-    </div>
-</div>
         </section>
         <section class="stats-wrapper">
-        <div class="sgr-info-panel container">
+            <div class="sgr-info-panel container">
 
-            <div class="sgr-info-left">
-                <h2 class="sgr-info-title">SGR Collectibles <b style="font-size: medium;">là gì?</b></h2>
+                <div class="sgr-info-left">
+                    <h2 class="sgr-info-title">SGR Collectibles <b style="font-size: medium;">là gì?</b></h2>
 
-                <p class="sgr-info-desc">
-                    SGR Collectibles Collectibles là bộ sưu tập xe mô hình cá nhân, tập trung vào diecast, Và diecast 1:64 gần như chiếm spotlight trong bst, ngoài ra vẫn còn các tỉ lệ khác như 1:18, 1:43,... trong hướng đi mới SGR sẽ nhập xe về bán cũng như thanh lý xe đã chơi với giá phù hợp với mục đích custom mới hay tùy mục đích người chơi! Vậy nên bạn sẽ luôn thấy bst xe có thay đổi thường xuyên chủ yếu từ HW do đấy là dòng sưu tập chính của tui ngoài mấy brand khác. Hiện chưa sẵn sàng phục vụ các Giao dịch trao đổi, buôn bán nên vẫn sẽ thiên về việc chia sẻ bst của mình qua web thay cho việc offline.
-                </p>
+                    <p class="sgr-info-desc">
+                        SGR Collectibles Collectibles là bộ sưu tập xe mô hình cá nhân, tập trung vào diecast, Và diecast 1:64 gần như chiếm spotlight trong bst, ngoài ra vẫn còn các tỉ lệ khác như 1:18, 1:43,... trong hướng đi mới SGR sẽ nhập xe về bán cũng như thanh lý xe đã chơi với giá phù hợp với mục đích custom mới hay tùy mục đích người chơi! Vậy nên bạn sẽ luôn thấy bst xe có thay đổi thường xuyên chủ yếu từ HW do đấy là dòng sưu tập chính của tui ngoài mấy brand khác. Hiện chưa sẵn sàng phục vụ các Giao dịch trao đổi, buôn bán nên vẫn sẽ thiên về việc chia sẻ bst của mình qua web thay cho việc offline.
+                    </p>
 
-                <div class="sgr-info-stats">
-                    <div><strong>66</strong><span><b style="font-size: medium;">Tổng</b></span>
-                    </div>
-                    <div><strong>45</strong><span>HW</span>
-                    </div>
-                    <div><strong>2</strong><span>M.box</span>
-                    </div>
-                    <div><strong>1</strong><span>P.Race</span>
-                    </div>
-                    <div><strong>14</strong><span>Khác</span>
-                    </div>
-                    <div><strong>6</strong><span>T.lý/Bán</span>
+                    <div class="sgr-info-stats">
+                        <div><strong>66</strong><span><b style="font-size: medium;">Tổng</b></span>
+                        </div>
+                        <div><strong>45</strong><span>HW</span>
+                        </div>
+                        <div><strong>2</strong><span>M.box</span>
+                        </div>
+                        <div><strong>1</strong><span>P.Race</span>
+                        </div>
+                        <div><strong>14</strong><span>Khác</span>
+                        </div>
+                        <div><strong>6</strong><span>T.lý/Bán</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="sgr-info-right">
-                <img src="./img/card-hw.png" alt="collection illustration">
-            </div>
+                <div class="sgr-info-right">
+                    <img src="./img/card-hw.png" alt="collection illustration">
+                </div>
 
-        </div>
+            </div>
         </section>
 
 
@@ -904,14 +925,14 @@
     <script>
         const text = "Chào mừng bạn đến xem bộ sưu tập của tôi";
         const subText = "Cập nhập lần cuối vào ngày 08-03-2026.";
-        
+
         const holidays = [{
             date: '01-01',
             message: 'Chúc Mừng Năm Mới!'
         }, {
             date: '08-03',
             message: 'Chúc Mừng Ngày Quốc tế Phụ Nữ (International Women‵s Day)'
-        },{
+        }, {
             date: '07-05',
             message: 'Kỷ niệm Chiến thắng Điện Biên Phủ (07-05-1954)'
         }, {
@@ -926,20 +947,20 @@
         }, {
             date: '02-09',
             message: 'Chúc Mừng Ngày Quốc Khánh nước CHXHCN Việt Nam!'
-        },{
+        }, {
             date: '25-09',
             message: 'Hôm nay là sinh nhật của tui (25-09-2004)'
-        },{
+        }, {
             date: '20-10',
             message: 'Chúc Mừng Ngày Phụ Nữ Việt Nam (Vietnamese Women‵s Day)'
-        },{
+        }, {
             date: '20-11',
             message: 'Chúc Mừng Ngày Nhà Giáo Việt Nam (Vietnamese Teacher‵s Day)'
         }, {
             date: '25-12',
             message: 'Chúc Mừng Giáng Sinh!'
         }];
-        
+
         const typingEl = document.getElementById("typewriter");
 
         if (!typingEl) {
@@ -961,33 +982,33 @@
             const holiday = holidays.find(h => h.date === todayKey);
 
             const finalText = holiday ? `${text} - ${holiday.message}` : `${text} - Hôm nay là ngày ${day}/${month}/${year}. chúc bạn may mắn!`;
-            
-            
+
+
 
             let i = 0;
 
-function typeChar() {
-    if (i < finalText.length) {
-        typingEl.insertBefore(
-            document.createTextNode(finalText[i]),
-            cursor
-        );
-        i++;
-        setTimeout(typeChar, 80);
-    } else {
+            function typeChar() {
+                if (i < finalText.length) {
+                    typingEl.insertBefore(
+                        document.createTextNode(finalText[i]),
+                        cursor
+                    );
+                    i++;
+                    setTimeout(typeChar, 80);
+                } else {
 
-        const br = document.createElement("br");
-        typingEl.appendChild(br);
+                    const br = document.createElement("br");
+                    typingEl.appendChild(br);
 
-        const subLine = document.createElement("span");
-        subLine.className = "sub-line";
-        subLine.textContent = subText;
+                    const subLine = document.createElement("span");
+                    subLine.className = "sub-line";
+                    subLine.textContent = subText;
 
-        typingEl.appendChild(subLine);
-    }
-}
+                    typingEl.appendChild(subLine);
+                }
+            }
 
-typeChar();
+            typeChar();
         }
     </script>
 
@@ -1044,39 +1065,39 @@ typeChar();
         updateClock();
     </script>
     <script>
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const counters = entry.target.querySelectorAll("strong");
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll("strong");
 
-      counters.forEach(counter => {
-        const target = +counter.innerText;
-        counter.innerText = "0";
-        const duration = 2500;
-        const startTime = performance.now();
+                    counters.forEach(counter => {
+                        const target = +counter.innerText;
+                        counter.innerText = "0";
+                        const duration = 2500;
+                        const startTime = performance.now();
 
-        function animate(time) {
-          const progress = Math.min((time - startTime) / duration, 1);
-          counter.innerText = Math.floor(progress * target);
+                        function animate(time) {
+                            const progress = Math.min((time - startTime) / duration, 1);
+                            counter.innerText = Math.floor(progress * target);
 
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          } else {
-            counter.innerText = target;
-          }
-        }
+                            if (progress < 1) {
+                                requestAnimationFrame(animate);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        }
 
-        requestAnimationFrame(animate);
-      });
+                        requestAnimationFrame(animate);
+                    });
 
-      observer.unobserve(entry.target);
-    }
-  });
-});
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
 
-observer.observe(document.querySelector(".sgr-info-stats"));
-</script>
-<script>
+        observer.observe(document.querySelector(".sgr-info-stats"));
+    </script>
+    <script>
         // Object để lưu trữ link cho từng nút riêng biệt
         let selectedLinks = {
             left: "",
@@ -1117,5 +1138,3 @@ observer.observe(document.querySelector(".sgr-info-stats"));
 </body>
 
 </html>
-
-
