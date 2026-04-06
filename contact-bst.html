@@ -970,23 +970,32 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 setTimeout(() => {
-    alert("Đã xong: Ôi bạn ơi nó không phải là lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
+    // 1. Hiện Alert chuẩn của An
+    alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
     
-    // BƯỚC 1: Đánh dấu đã troll xong
+    // 2. Đánh dấu đã vượt qua bài test DNA (Troll xong)
     isTrollDone = true; 
 
-    // BƯỚC 2: Trả lại giao diện bình thường ngay lập tức
-    if (sgrOverlay) sgrOverlay.style.display = 'none';   // Ẩn màn hình mờ
-    if (sgrCaptcha) sgrCaptcha.style.display = 'none';   // Ẩn cái bảng GAY
-    
-    // BƯỚC 3: Hiện lại nút Submit để An tự tay bấm
-    if (sgrBtn) {
-        sgrBtn.style.display = 'flex';
-        sgrBtn.style.opacity = "1";
-        sgrBtn.innerText = "Gửi ngay"; // Đổi chữ nút cho khớp bối cảnh
+    // 3. CHIẾN THUẬT QUÉT SẠCH 100% (Đảm bảo thanh xác thực biến mất vĩnh viễn)
+    if (sgrOverlay) {
+        sgrOverlay.style.display = 'none';
+        sgrOverlay.style.setProperty("display", "none", "important");
+    }
+    if (sgrCaptcha) {
+        sgrCaptcha.style.display = 'none';
+        sgrCaptcha.style.setProperty("display", "none", "important");
+        sgrCaptcha.classList.remove('captcha-active'); // Gỡ bỏ class hiệu ứng
     }
 
-    // TUYỆT ĐỐI KHÔNG GỌI HÀM GỬI Ở ĐÂY NỮA
+    // 4. HIỆN LẠI NÚT SUBMIT HÌNH ẢNH (Sẵn sàng cho cú nhấn cuối)
+    if (sgrBtn) {
+        sgrBtn.style.display = 'flex'; // Trả lại layout ban đầu
+        sgrBtn.style.visibility = 'visible';
+        sgrBtn.style.opacity = '1';
+        sgrBtn.style.pointerEvents = 'auto'; // Đảm bảo bấm được 100%
+    }
+
+    console.log("SGR System: Đã dọn dẹp hiện trường. Mời An nhấn Submit lần 2!");
 }, 1500);
             }, 3000);
         };
