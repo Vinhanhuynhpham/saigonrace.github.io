@@ -586,7 +586,7 @@
 
 
         <section class="container py-5" style="text-align: center;">
-            <img style=" cursor: pointer;"  src="./img/404.png" alt="img" width="300">
+            <img style=" cursor: pointer;" onclick="toggleAudio2()" src="./img/404.png" alt="img" width="500">
             <br>
             <div style="padding: 40px;">
             <h1 class="text-dark">Oops!</h1>
@@ -616,7 +616,27 @@
 <audio id="bgMusic" preload="auto">
     <source src="./img/audio/winxperro.mp3" type="audio/mpeg">
 </audio>
+<audio id="warningSound" preload="auto">
+        <source src="./img/audio/windows-startup-crash.mp3" type="audio/mpeg">
+    </audio>
+<script>
+        let isPlaying = false;
 
+        function toggleAudio2() {
+            const audio = document.getElementById("warningSound");
+
+            if (isPlaying) {
+                audio.pause();
+
+            } else {
+                audio.play().catch(err => {
+                    console.log("Audio play bị chặn:", err);
+                });
+            }
+
+            isPlaying = !isPlaying;
+        }
+    </script>
 <script>
     const audio = document.getElementById("bgMusic");
 
