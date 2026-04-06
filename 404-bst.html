@@ -593,7 +593,7 @@
         const targetPage = "bm.html"; 
 
         // 1. ĐỔI TITLE NGAY LẬP TỨC (Bấm là hiện liền)
-        document.title = "☢️ Tự hủy!";
+        document.title = "☢️ Tự hủy...";
 
         if (isPlaying) {
             audio.pause();
@@ -603,7 +603,7 @@
         } else {
             // 2. Thêm một chút delay nhẹ để đổi nội dung title kịch tính hơn trong lúc nhạc chạy
             setTimeout(() => {
-                if(!audio.paused) document.title = "load...";
+                if(!audio.paused) document.title = "loading...";
             }, 1500);
 
             audio.play().then(() => {
