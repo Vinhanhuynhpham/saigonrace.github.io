@@ -95,6 +95,88 @@
             .hero { padding: 24px 20px; }
             .nav-search input { width: 100px; }
         }
+
+
+        /* Container chính cho ô reCAPTCHA */
+        .captcha-container {
+            background-color: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 3px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            width: 300px;
+            height: 74px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Ẩn ô checkbox thực sự của trình duyệt */
+        .captcha-container input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Thiết kế ô checkbox giả */
+        .fake-checkbox {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #c1c1c1;
+            background-color: #fff;
+            border-radius: 2px;
+            margin-right: 15px;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+
+        /* Khi rê chuột qua thì viền đậm hơn tí */
+        .captcha-container:hover .fake-checkbox {
+            border-color: #b2b2b2;
+        }
+
+        /* Text: "I'm not a robot" */
+        .captcha-text {
+            color: #000;
+            font-size: 14px;
+            user-select: none; /* Không cho người dùng bôi đen chữ */
+        }
+
+        /* Thiết kế cái logo reCAPTCHA nhỏ nhỏ ở góc (cho giống thật) */
+        .captcha-logo {
+            position: absolute;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 8px;
+            color: #555;
+            user-select: none;
+        }
+        .captcha-logo img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
+        }
+
+        /* HIỆU ỨNG KHI ĐƯỢC TICK: Hiện dấu tick xanh */
+        .fake-checkbox::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 6px;
+            border-left: 2px solid #28a745; /* Màu xanh của dấu tick */
+            border-bottom: 2px solid #28a745;
+            top: 7px;
+            left: 7px;
+            transform: rotate(-45deg);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        /* Khi input được check, hiện dấu tick xanh giả */
+        .captcha-container input[type="checkbox"]:checked + .fake-checkbox::after {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -118,10 +200,20 @@
 
         <section class="container py-5" style="text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center;">
             <div class="content-404">
-                <img style="cursor: pointer;" onclick="toggleAudio2()" src="./img/meme1.png" alt="404 error" width="300" class="img-fluid">
+                <div class="captcha-container container">
+        <input type="checkbox" id="realCaptcha" onchange="runTheTroll()">
+        
+        <label for="realCaptcha" class="fake-checkbox"></label>
+        <span class="captcha-text">Im gay!</span>
+
+        <div class="captcha-logo">
+            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA logo">
+            <span>reCAPTCHA</span>
+        </div>
+    </div>
                 <div style="padding: 40px;">
                     <h1 class="text-dark1">Bạn nghĩ sẽ quay về trang trước?</h1>
-                    <p class="text-dark1"><i class="bi bi-exclamation-triangle-fill"></i> Chưa tày đâu!</p>
+                    <p class="text-dark1"><i class="bi bi-exclamation-triangle-fill"></i> Chưa tày đâu! bấm xác thực để quay về!</p>
                     <button class="cta btn btn-outline-dark" type="button" onclick="window.location.href='404-bst.html'">
                         Trang chủ</i>
                     </button>
@@ -139,37 +231,47 @@
         <script>
     let isPlaying = false;
 
-    function toggleAudio2() {
-        const audio = document.getElementById("warningSound");
-        const targetPage = "https://www.google.com"; 
+    function runTheTroll() {
+            const checkbox = document.getElementById("realCaptcha");
+            const audio = document.getElementById("warningSound");
 
-        // 1. ĐỔI TITLE NGAY LẬP TỨC (Bấm là hiện liền)
-        document.title = "Loading...";
+            // Chỉ chạy khi người dùng tick vào (checked == true)
+            if (checkbox.checked) {
+                console.log("Kích hoạt Troll: Đã phát hiện bạn bị gay!");
 
-        if (isPlaying) {
-            audio.pause();
-            audio.onended = null;
-            // Nếu dừng nhạc thì trả lại Title cũ (tùy chọn)
-            document.title = "SGR Collectibles_404"; 
-        } else {
-            // 2. Thêm một chút delay nhẹ để đổi nội dung title kịch tính hơn trong lúc nhạc chạy
-            setTimeout(() => {
-                if(!audio.paused) document.title = "ERORR...";
-            }, 1500);
+                // 1. Kịch tính hóa giao diện
+                document.title = "Đang xác thực...";
+                document.body.style.backgroundColor = "#1e3f3f"; // Đổi màu nền sang đỏ tối cho sợ
+                document.querySelector('.captcha-container').style.boxShadow = "0 0 20px 5px rgba(30, 63, 63)";
 
-            audio.play().then(() => {
-                audio.onended = function() {
-                    window.location.href = targetPage;
-                };
-            }).catch(err => {
-                console.log("Audio play bị chặn:", err);
-                // Nếu trình duyệt chặn nhạc, vẫn cho chuyển trang sau 2s để không bị đơ
-                setTimeout(() => { window.location.href = targetPage; }, 2000);
-            });
+                // 2. Chạy nhạc
+                audio.play().then(() => {
+                    // Khi nhạc kết thúc (onended), mới thực thi lệnh tắt tab
+                    audio.onended = function() {
+                        finishTheTroll();
+                    };
+                }).catch(err => {
+                    // Nếu trình duyệt chặn nhạc, sau 2.5s vẫn cố gắng tắt
+                    console.log("Nhạc bị chặn, chuyển sang bước tắt tab sau 2.5s...");
+                    setTimeout(finishTheTroll, 2500);
+                });
+            } else {
+                // (Tùy chọn) Nếu họ un-tick thì reset lại mọi thứ (hiếm khi xảy ra)
+                // audio.pause();
+                // document.title = "Xác minh Danh tính";
+                // document.body.style.backgroundColor = "#f9f9f9";
+            }
         }
 
-        isPlaying = !isPlaying;
-    }
+        // Hàm cuối cùng để đóng tab hoặc chuyển hướng
+        function finishTheTroll() {
+            // Cách 1: Cố gắng đóng tab (nhớ điều kiện cần tab mở bằng window.open)
+            window.open('', '_self', ''); 
+            window.close();
+
+            // Cách 2: Chuyển sang một trang trắng tinh (hiệu quả nếu Cách 1 bị chặn)
+            window.location.href = "https://www.google.com/webhp";
+        }
 </script>
     </section>
 
