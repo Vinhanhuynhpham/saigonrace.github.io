@@ -970,20 +970,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 setTimeout(() => {
-    alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
+    alert("Đã xong: Ôi bạn ơi nó không phải là lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
     
-    isTrollDone = true; // Đánh dấu đã vượt qua bài test DNA
+    // BƯỚC 1: Đánh dấu đã troll xong
+    isTrollDone = true; 
 
-    // 1. Ẩn toàn bộ giao diện Troll
-    if (sgrOverlay) sgrOverlay.style.display = 'none';
-    if (sgrCaptcha) sgrCaptcha.style.display = 'none';
-    if (sgrBtn) sgrBtn.style.display = 'flex';
-
-    // 2. TỰ ĐỘNG GỬI LUÔN (Không bắt user bấm Submit lần 2)
-    if (sgrForm) {
-        // Gọi thẳng hàm gửi dữ liệu mà không cần đợi click
-        performSGRSubmit(sgrForm); 
+    // BƯỚC 2: Trả lại giao diện bình thường ngay lập tức
+    if (sgrOverlay) sgrOverlay.style.display = 'none';   // Ẩn màn hình mờ
+    if (sgrCaptcha) sgrCaptcha.style.display = 'none';   // Ẩn cái bảng GAY
+    
+    // BƯỚC 3: Hiện lại nút Submit để An tự tay bấm
+    if (sgrBtn) {
+        sgrBtn.style.display = 'flex';
+        sgrBtn.style.opacity = "1";
+        sgrBtn.innerText = "Gửi ngay"; // Đổi chữ nút cho khớp bối cảnh
     }
+
+    // TUYỆT ĐỐI KHÔNG GỌI HÀM GỬI Ở ĐÂY NỮA
 }, 1500);
             }, 3000);
         };
