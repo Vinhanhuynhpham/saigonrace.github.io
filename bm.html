@@ -263,7 +263,7 @@
                     // Khi nhạc 2 chạy hết thì mới kết thúc
                     audio2.onended = function() {
                         captchaText.innerText = "Đang chuyển hướng...";
-                        setTimeout(finishTheTroll, 500);
+                        setTimeout(finishTheTroll, 300);
                     };
                 }).catch(err => {
                     // Nếu trình duyệt chặn nhạc 2, đợi thêm 2s rồi tự đóng
@@ -271,7 +271,7 @@
                     setTimeout(finishTheTroll, 2000);
                 });
 
-            }, 5000); // 3000ms = 3 giây đúng ý bạn nhé
+            }, 4000); // 3000ms = 3 giây đúng ý bạn nhé
         }
     }
 
