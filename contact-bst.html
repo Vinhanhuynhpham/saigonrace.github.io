@@ -970,12 +970,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 setTimeout(() => {
-                    alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
-                    isTrollDone = true;
-                    if (sgrOverlay) sgrOverlay.style.display = "none";
-                    if (sgrCaptcha) sgrCaptcha.style.display = "none";
-                    if (sgrBtn) sgrBtn.style.display = "flex";
-                }, 1500);
+    alert("Đã xong: Bạn không có lỗi, đó là tính năng! Nhấn OK để tiếp tục.");
+    isTrollDone = true; // Đánh dấu đã troll xong
+
+    // Ẩn toàn bộ màn hình troll
+    if (sgrOverlay) sgrOverlay.style.display = 'none';
+    if (sgrCaptcha) sgrCaptcha.style.display = 'none';
+    
+    // Hiện lại nút Submit và TỰ ĐỘNG kích hoạt gửi dữ liệu
+    if (sgrBtn) {
+        sgrBtn.style.display = 'flex';
+        // Tự động kích hoạt submit luôn cho chuyên nghiệp
+        sgrForm.requestSubmit(); 
+    }
+}, 1500);
             }, 3000);
         };
     }
