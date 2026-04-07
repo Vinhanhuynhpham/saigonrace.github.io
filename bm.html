@@ -224,7 +224,7 @@
             <source src="./img/audio/vine-boom-sound-effect.mp3" type="audio/mpeg">
         </audio>
         <audio id="warningSound" preload="auto">
-            <source src="./img/audio/loading-icon.mp3" type="audio/mpeg">
+            <source src="./img/audio/anime-ahh.mp3" type="audio/mpeg">
         </audio>
         <audio id="warningSound2" preload="auto">
             <source src="./img/audio/gey-echo.mp3" type="audio/mpeg">
@@ -238,11 +238,11 @@
         const captchaText = document.querySelector('.captcha-text');
 
         if (checkbox.checked) {
-            console.log("Bắt đầu quá trình quét...");
+            console.log("Bắt đầu quá trình xác nhận...");
 
             // --- GIAI ĐOẠN 1: ĐANG QUÉT (0s - 3s) ---
-            document.title = "Kiểm tra...";
-            captchaText.innerText = "Đang kiểm tra..."; 
+            document.title = "xác nhận...";
+            captchaText.innerText = "Đang xác nhận..."; 
             
             audio1.play().catch(err => console.log("Audio 1 bị chặn"));
 
@@ -253,7 +253,7 @@
                 audio1.currentTime = 0;
 
                 // Thay đổi nội dung cực gắt
-                document.title = "Đã kiểm tra! Bạn GAY!";
+                document.title = "Đã xác nhận: Bạn bị GAY!";
                 captchaText.innerText = "Bạn là GAY!!!";
                 captchaText.style.color = "#ff4444";
                 captchaText.style.fontWeight = "bold";
