@@ -427,67 +427,77 @@
         }
         /* ===== FOOTER ===== */
         
-        footer {
-            margin-top: auto;
-            border-top: 1px solid rgba(30, 63, 63);
-            padding: 32px 56px;
-            font-size: 13px;
-        }
-        
-        .footer-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-        }
-        
-        .footer-brand {
-            max-width: 260px;
-        }
-        
-        .footer-brand strong {
-            display: block;
-            margin-bottom: 6px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 32px;
-        }
-        
-        .footer-links a {
-            text-decoration: none;
-            color: inherit;
-            opacity: .6;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1
-        }
-        
-        .copyright {
-            margin-top: 16px;
-            font-size: 12px;
-            opacity: .45;
-        }
-        
-        @media(max-width:1024px) {
-            .main {
-                grid-template-columns: 1fr
-            }
-            .right {
-                display: none
-            }
-            .title {
-                font-size: 64px
-            }
-            footer {
-                padding: 24px
-            }
-            .footer-wrap {
-                flex-direction: column
-            }
-        }
+        /* LAYER 1: Nền Footer */
+.sgr-footer {
+    position: relative;
+    background-color: var(--sgr-teal); /* Màu nền dự phòng */
+    
+    /* Chèn ảnh SVG của bạn */
+    background-image: url('./img/bg_ft.svg'); 
+    
+    /* Đảm bảo ảnh nền nằm dưới cùng và dàn ngang hết cỡ */
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover; /* Hoặc 'contain' nếu bạn muốn thấy toàn bộ skyline không bị mất hình */
+    
+    /* Quan trọng: Triệt tiêu khoảng hở để logo chạm đáy */
+    padding: 60px 0 0 0 !important; 
+    overflow: hidden;
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+}
+
+/* LAYER 2: Nội dung & Logo */
+.footer-content {
+    /* Đảm bảo container này bao quát toàn bộ độ rộng bạn muốn logo đạt tới */
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+.logo-container {
+    position: relative;
+    width: 100%;
+    line-height: 0; /* Khử khoảng hở dưới chân ảnh */
+    margin-top: 40px;
+}
+
+.main-logo-img {
+    /* Logo sẽ tự giãn bằng chính xác độ rộng của cụm thông tin bên trên */
+    width: 100%; 
+    height: auto;
+    display: block; /* Ép chạm đáy hoàn toàn */
+}
+
+/* Khử màu xanh mặc định của link trình duyệt */
+.nav-link {
+    color: white !important;
+}
+
+/* LAYER 3: Sticker (Dán đè lên logo) */
+.sticker-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.social-icons a{color: #fff;}
+
+.sticker {
+    position: absolute;
+    width: 5%; /* Sticker sẽ co giãn theo kích thước logo */
+    height: auto;
+    filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.4));
+}
+
+/* Tọa độ các điểm xanh lá của bạn (tính theo %) */
+.st-1 { top: 12%; left: 18%; transform: rotate(-10deg); }
+.st-2 { top: 62%; left: 28%; transform: rotate(15deg); }
+.st-3 { top: 52%; left: 52%; transform: rotate(-5deg); }
+.st-4 { top: 58%; left: 77%; transform: rotate(10deg); }
         /* ===== RESPONSIVE ===== */
         
         @media(min-width:768px) {

@@ -21,12 +21,16 @@
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        /* ==========================================
+   1. RESET & BASE STYLES
+   ========================================== */
+        
         :root {
             --ink: #1e3f3f;
         }
         
         * {
-            box-sizing: border-box
+            box-sizing: border-box;
         }
         
         body {
@@ -34,13 +38,13 @@
             font-family: 'Space Mono', monospace;
             color: var(--ink);
             background: #fff url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40"%3E%3Cline x1="0" y1="0" x2="0" y2="40" stroke="%23ccc" stroke-width="1" /%3E%3Cline x1="0" y1="0" x2="40" y2="0" stroke="%23ccc" stroke-width="1" /%3E%3C/svg%3E') repeat;
-            /* để footer dính đáy khi trang ngắn */
-            
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        /* ===== FULL BROWSER HERO ===== */
+        /* ==========================================
+   2. HERO & MAIN LAYOUT
+   ========================================== */
         
         .hero {
             min-height: 100vh;
@@ -49,71 +53,6 @@
             flex-direction: column;
             padding: 32px 56px;
         }
-        /* ===== NAVBAR ===== */
-        
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
-        }
-        
-        .logo {
-            font-weight: 700
-        }
-        
-        .menu {
-            display: flex;
-            gap: 32px;
-        }
-        
-        .menu a {
-            text-decoration: none;
-            color: inherit;
-            opacity: .65;
-            position: relative;
-        }
-        
-        .dropdown {
-            position: relative;
-        }
-        
-        .dropdown > a {
-            display: inline-block;
-            padding-bottom: 8px;
-            /* tạo vùng hover đệm */
-        }
-        
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #e3e2de;
-            border: 1px solid rgba(0, 0, 0, .1);
-            padding: 12px 0;
-            min-width: 160px;
-            display: none;
-            z-index: 10;
-        }
-        /* MỞ DROPDOWN KHI HOVER CẢ KHỐI */
-        
-        .dropdown:hover .dropdown-content,
-        .dropdown-content:hover {
-            display: block;
-        }
-        
-        .dropdown-content a {
-            display: block;
-            padding: 8px 20px;
-            text-decoration: none;
-            color: inherit;
-            white-space: nowrap;
-        }
-        
-        .dropdown-content a:hover {
-            background: rgba(0, 0, 0, .04);
-        }
-        /* ===== MAIN ===== */
         
         .main {
             flex: 1;
@@ -127,7 +66,373 @@
             font-weight: 700;
             line-height: 1;
         }
-        /* ===== SIDEBAR (MOBILE ONLY) ===== */
+        /* ==========================================
+   3. NAVIGATION & SEARCH
+   ========================================== */
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        
+        .logo {
+            font-weight: 700;
+        }
+        
+        .menu {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .menu a {
+            text-decoration: none;
+            color: inherit;
+            opacity: .65;
+            position: relative;
+        }
+        /* Dropdown Desktop */
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown > a {
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #e3e2de;
+            border: 1px solid rgba(0, 0, 0, .1);
+            padding: 12px 0;
+            min-width: 160px;
+            display: none;
+            z-index: 10;
+        }
+        
+        .dropdown:hover .dropdown-content,
+        .dropdown-content:hover,
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+        
+        .dropdown-content a {
+            display: block;
+            padding: 8px 20px;
+            text-decoration: none;
+            color: inherit;
+            white-space: nowrap;
+        }
+        
+        .dropdown-content a:hover {
+            background: rgba(0, 0, 0, .04);
+        }
+        
+        .dropdown-item {
+            cursor: pointer;
+        }
+        /* Search */
+        
+        .nav-search {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-search input {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, .25);
+            background: transparent;
+            padding: 6px 4px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--ink);
+            width: 140px;
+            outline: none;
+        }
+        
+        .nav-search input::placeholder {
+            color: rgba(0, 0, 0, .4);
+        }
+        
+        .nav-search input:focus {
+            border-bottom-color: var(--ink);
+        }
+        
+        .search-icon {
+            font-size: 30px;
+            opacity: .5;
+            margin-right: 6px;
+        }
+        /* ==========================================
+   4. INFO PANEL & STATS
+   ========================================== */
+        
+        .sgr-info-panel {
+            margin: 56px 0 0;
+            padding: 0 56px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 48px;
+            align-items: center;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .sgr-info-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            margin-bottom: 16px;
+            color: #1e3f3f;
+        }
+        
+        .sgr-info-desc {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 420px;
+            opacity: .8;
+            margin-bottom: 28px;
+        }
+        
+        .sgr-info-stats {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(40px, 1fr));
+            gap: 16px;
+        }
+        
+        .sgr-info-stats div {
+            text-align: left;
+        }
+        
+        .sgr-info-stats strong {
+            font-size: 18px;
+            display: block;
+        }
+        
+        .sgr-info-stats span {
+            font-size: 11px;
+            opacity: .6;
+        }
+        
+        .sgr-info-right {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .sgr-info-right img {
+            max-width: 100%;
+            height: auto;
+            opacity: .85;
+        }
+        
+        .stats-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        /* ==========================================
+   5. SGR LCD ZONE & TYPING
+   ========================================== */
+        
+        .sgr-lcd {
+            margin: 48px 0 32px;
+            padding: 0 56px;
+            max-width: none;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .sgr-lcd-frame {
+            position: relative;
+            border: 2px solid #1e3f3f;
+            border-radius: 4px;
+            padding: 32px 28px;
+            min-height: 400px;
+            background: #f1f8f7;
+            overflow: hidden;
+        }
+        
+        .sgr-lcd-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("./img/sg-bg3.jpg") center / cover;
+            opacity: .45;
+            z-index: 0;
+        }
+        
+        .sgr-lcd-frame > * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .sgr-rec-label {
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3f3f;
+            padding: 2px 6px;
+            border-radius: 3px;
+            animation: recBlink 1s infinite;
+        }
+        
+        .sgr-clock {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            color: #1e3f3f;
+        }
+        
+        .sgr-typing {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+            color: #1e3f3f;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            margin-left: 2px;
+            background: #1e3f3f;
+            vertical-align: baseline;
+            animation: blink 1s steps(1) infinite;
+        }
+        
+        .sub-line {
+            font-size: 12px;
+            opacity: 0.7;
+            display: block;
+            margin-top: 4px;
+        }
+        /* Announcements */
+        
+        .sgr-announce {
+            margin-top: 0px;
+            border: 2px solid #1e3f3f;
+            border-radius: 4px;
+            background: #f1f8f7;
+            overflow: hidden;
+            height: 32px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sgr-announce span {
+            display: inline-block;
+            padding-left: 100%;
+            white-space: nowrap;
+            animation: sgr-scroll 22s linear infinite;
+            font-size: 13px;
+            color: #1e3f3f;
+        }
+        
+        .sgr-announce i {
+            margin-right: 8px;
+        }
+        
+        .sgr-announce a {
+            color: #1e3f3f;
+            text-decoration: underline;
+        }
+        /* ==========================================
+   6. FOOTER & STICKERS
+   ========================================== */
+        
+        .sgr-footer {
+            position: relative;
+            background-color: var(--sgr-teal);
+            background-image: url('./img/bg_ft.svg');
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-size: cover;
+            padding: 60px 0 0 0 !important;
+            overflow: hidden;
+            font-family: 'Space Mono', monospace;
+            color: #fff;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: left !important;
+            /* Quan trọng nhất */
+        }
+        
+        .logo-container {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            margin-top: 40px;
+        }
+        
+        .main-logo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .sticker-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .social-icons a {
+            color: #fff;
+        }
+        
+        .sticker {
+            position: absolute;
+            width: 5%;
+            height: auto;
+            filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
+        }
+        
+        .st-1 {
+            top: 12%;
+            left: 18%;
+            transform: rotate(-10deg);
+        }
+        
+        .st-2 {
+            top: 62%;
+            left: 28%;
+            transform: rotate(15deg);
+        }
+        
+        .st-3 {
+            top: 52%;
+            left: 52%;
+            transform: rotate(-5deg);
+        }
+        
+        .st-4 {
+            top: 58%;
+            left: 77%;
+            transform: rotate(10deg);
+        }
+        /* ==========================================
+   7. SIDEBAR & OVERLAY (MOBILE MENU)
+   ========================================== */
         
         .sidebar {
             position: fixed;
@@ -185,12 +490,10 @@
             opacity: .7;
             margin-bottom: 12px;
         }
-        /* mở dropdown */
         
         .sidebar-dropdown.active .sidebar-sub {
             display: block;
         }
-        /* Overlay */
         
         .overlay {
             position: fixed;
@@ -205,203 +508,38 @@
         .overlay.active {
             opacity: 1;
             pointer-events: auto;
-        }
-        
-        .overlay.active {
-            display: block
-        }
-        
-        .overlay.active {
-            display: block
-        }
-        /* ===== INFO PANEL ===== */
-        /* ===== INFO PANEL ===== */
-        
-        .sgr-info-panel {
-            margin: 56px 0 0;
-            padding: 0 56px;
-            /* 👈 BẰNG HERO / NAV */
-            
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 48px;
-            align-items: center;
-            font-family: 'Space Mono', monospace;
-        }
-        /* ===== LEFT ===== */
-        
-        .sgr-info-title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: .5px;
-            margin-bottom: 16px;
-            color: #1e3f3f;
-        }
-        
-        .sgr-info-desc {
-            font-size: 14px;
-            line-height: 1.7;
-            max-width: 420px;
-            opacity: .8;
-            margin-bottom: 28px;
-        }
-        /* ===== STATS ===== */
-        
-        .sgr-info-stats {
-            display: grid;
-            grid-template-columns: repeat(6, minmax(40px, 1fr));
-            gap: 16px;
-        }
-        
-        .sgr-info-stats div {
-            text-align: left;
-        }
-        
-        .sgr-info-stats strong {
-            font-size: 18px;
             display: block;
         }
-        
-        .sgr-info-stats span {
-            font-size: 11px;
-            opacity: .6;
-        }
-        /* ===== RIGHT ===== */
-        
-        .sgr-info-right {
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .sgr-info-right img {
-            max-width: 100%;
-            height: auto;
-            opacity: .85;
-        }
-        
-        @media (max-width: 768px) {
-            .sgr-info-panel {
-                grid-template-columns: 1fr;
-                justify-items: center;
-                padding: 0 16px;
-                /* thêm cái này */
-            }
-            .sgr-info-right {
-                display: none;
-            }
-            .sgr-info-left {
-                max-width: 520px;
-                margin: 0 auto;
-            }
-            .sgr-info-stats {
-                transform: scale(0.9);
-                transform-origin: center top;
-                /* sửa ở đây */
-            }
-        }
-        
-        .sgr-typing {
-            font-size: 22px;
-            font-weight: 700;
-            margin: 0;
-            color: #1e3f3f;
-            white-space: normal;
-            /* ⬅ cho phép xuống dòng */
-            
-            word-break: break-word;
-            /* ⬅ tránh tràn */
-            
-            line-height: 1.4;
-        }
-        
-        .typing-cursor {
-            display: inline-block;
-            width: 4px;
-            height: 1em;
-            margin-left: 2px;
-            background: #1e3f3f;
-            vertical-align: baseline;
-            /* ⬅ CHÌA KHOÁ */
-            
-            animation: blink 1s steps(1) infinite;
-        }
+        /* ==========================================
+   8. ANIMATIONS & RESPONSIVE
+   ========================================== */
         
         @keyframes blink {
             50% {
                 opacity: 0
             }
         }
-        /* ===== FOOTER ===== */
         
-        footer {
-            margin-top: auto;
-            border-top: 1px solid rgba(30, 63, 63);
-            padding: 32px 56px;
-            font-size: 13px;
-        }
-        
-        .footer-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-        }
-        
-        .footer-brand {
-            max-width: 260px;
-        }
-        
-        .footer-brand strong {
-            display: block;
-            margin-bottom: 6px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 32px;
-        }
-        
-        .footer-links a {
-            text-decoration: none;
-            color: inherit;
-            opacity: .6;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1
-        }
-        
-        .copyright {
-            margin-top: 16px;
-            font-size: 12px;
-            opacity: .45;
-        }
-        
-        @media(max-width:1024px) {
-            .main {
-                grid-template-columns: 1fr
+        @keyframes recBlink {
+            0%, 100% {
+                opacity: 1;
             }
-            .right {
-                display: none
-            }
-            .title {
-                font-size: 64px
-            }
-            footer {
-                padding: 24px
-            }
-            .footer-wrap {
-                flex-direction: column
+            50% {
+                opacity: 0.4;
             }
         }
-        /* ===== RESPONSIVE ===== */
+        
+        @keyframes sgr-scroll {
+            from {
+                transform: translateX(0)
+            }
+            to {
+                transform: translateX(-100%)
+            }
+        }
         
         @media(min-width:768px) {
-            .menu-toggle {
-                display: none
-            }
-            .sidebar,
-            .overlay {
+            .menu-toggle, .sidebar, .overlay {
                 display: none
             }
         }
@@ -415,38 +553,6 @@
             }
         }
         
-        .nav-search {
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-search input {
-            border: none;
-            border-bottom: 1px solid rgba(0, 0, 0, .25);
-            background: transparent;
-            padding: 6px 4px;
-            font-size: 13px;
-            font-family: inherit;
-            color: var(--ink);
-            width: 140px;
-            outline: none;
-        }
-        
-        .nav-search input::placeholder {
-            color: rgba(0, 0, 0, .4);
-        }
-        
-        .nav-search input:focus {
-            border-bottom-color: var(--ink);
-        }
-        
-        .search-icon {
-            font-size: 30px;
-            opacity: .5;
-            margin-right: 6px;
-        }
-        /* ===== MOBILE STABILITY FIX ===== */
-        
         @media (max-width: 768px) {
             body {
                 overflow-x: hidden;
@@ -458,8 +564,6 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
-            /* khóa size chữ */
-            
             .title {
                 font-size: 42px;
                 line-height: 1.05;
@@ -468,7 +572,7 @@
                 max-width: 100%;
                 font-size: 13px;
             }
-            /* stats không tràn */
+            /* Stats Mobile */
             
             .stats {
                 flex-wrap: wrap;
@@ -480,8 +584,40 @@
             .stat-number {
                 font-size: 22px;
             }
-            /* right không phình */
+            /* Info Panel Mobile */
             
+            .sgr-info-panel {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                padding: 0 16px;
+            }
+            .sgr-info-right {
+                display: none;
+            }
+            .sgr-info-left {
+                max-width: 520px;
+                margin: 0 auto;
+            }
+            .sgr-info-stats {
+                transform: scale(0.9);
+                transform-origin: center top;
+            }
+            /* LCD Mobile */
+            
+            .sgr-lcd {
+                margin: 28px 0 20px;
+                padding: 0 20px;
+            }
+            .sgr-lcd-frame {
+                padding: 24px 20px;
+                min-height: 260px;
+            }
+            .sgr-typing {
+                font-size: 18px
+            }
+            .sgr-announce {
+                height: 28px
+            }
             .right {
                 padding: 0;
                 gap: 24px;
@@ -493,187 +629,6 @@
             iframe {
                 max-width: 100%;
             }
-        }
-        
-        .stats-wrapper {
-            display: flex;
-            justify-content: center;
-        }
-        /* ===== SGR Collectibles LCD ZONE ===== */
-        
-        .sgr-lcd {
-            margin: 48px 0 32px;
-            padding: 0 56px;
-            /* desktop giống hero / nav */
-            
-            max-width: none;
-            /* full width */
-            
-            font-family: 'Space Mono', monospace;
-        }
-        /* mobile */
-        
-        @media (max-width: 768px) {
-            .sgr-lcd {
-                margin: 28px 0 20px;
-                padding: 0 20px;
-                /* 👈 thu gọn giống nav mobile */
-            }
-        }
-        /* ===== LCD FRAME ===== */
-        
-        .sgr-lcd-frame {
-            position: relative;
-            border: 2px solid #1e3f3f;
-            border-radius: 4px;
-            padding: 40px 32px;
-            /* tăng padding cho thoáng */
-            
-            min-height: 260px;
-            /* 👈 CHIỀU CAO BẢNG CHÍNH */
-            
-            background: #f1f8f7;
-            overflow: hidden;
-        }
-        /* background image */
-        
-        .sgr-lcd-frame::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: url("./img/sg-bg3.jpg") center / cover;
-            opacity: .45;
-            z-index: 0;
-        }
-        /* grid overlay */
-        
-        .sgr-lcd-frame {
-            position: relative;
-            border: 2px solid #1e3f3f;
-            border-radius: 4px;
-            padding: 32px 28px;
-            min-height: 400px;
-            /* 👈 TĂNG CHIỀU CAO Ở ĐÂY */
-            
-            background: #f1f8f7;
-            overflow: hidden;
-        }
-        
-        .sgr-lcd-frame > * {
-            position: relative;
-            z-index: 2;
-        }
-        /* ===== REC LABEL ===== */
-        
-        .sgr-rec-label {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #1e3f3f;
-            padding: 2px 6px;
-            border-radius: 3px;
-            animation: recBlink 1s infinite;
-        }
-        
-        @keyframes recBlink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.4;
-            }
-        }
-        /* ===== CLOCK ===== */
-        
-        .sgr-clock {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            color: #1e3f3f;
-        }
-        /* ===== TYPING TEXT ===== */
-        /* ===== ANNOUNCEMENT ===== */
-        
-        .sgr-announce {
-            margin-top: 0px;
-            border: 2px solid #1e3f3f;
-            border-radius: 4px;
-            background: #f1f8f7;
-            overflow: hidden;
-            height: 32px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .sgr-announce span {
-            display: inline-block;
-            padding-left: 100%;
-            white-space: nowrap;
-            animation: sgr-scroll 22s linear infinite;
-            font-size: 13px;
-            color: #1e3f3f;
-        }
-        
-        .sgr-announce i {
-            margin-right: 8px;
-        }
-        
-        .sgr-announce a {
-            color: #1e3f3f;
-            text-decoration: underline;
-        }
-        /* ===== SCROLL ANIMATION ===== */
-        
-        @keyframes sgr-scroll {
-            from {
-                transform: translateX(0)
-            }
-            to {
-                transform: translateX(-100%)
-            }
-        }
-        /* ===== RESPONSIVE ===== */
-        
-        @media(max-width:768px) {
-            .sgr-lcd {
-                margin: 32px auto 24px
-            }
-            .sgr-lcd-frame {
-                padding: 24px 20px
-            }
-            .sgr-typing {
-                font-size: 18px
-            }
-            .sgr-announce {
-                height: 28px
-            }
-        }
-        
-        .sub-line {
-            font-size: 12px;
-            /* nhỏ hơn dòng chính */
-            
-            opacity: 0.7;
-            /* nhạt hơn */
-            
-            display: block;
-            /* xuống dòng riêng */
-            
-            margin-top: 4px;
-            /* cách dòng trên một chút */
-        }
-        /* CSS để tạo hiệu ứng hover hiện menu thay vì phải click */
-        
-        .dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
-        
-        .dropdown-item {
-            cursor: pointer;
         }
     </style>
 </head>
@@ -876,22 +831,130 @@
 
 
     </section>
+    <button id="btnScrollTop" style="position: fixed; bottom: 40px; right: 40px; 
+               z-index: 1000; opacity: 0; pointer-events: none; 
+               transition: opacity 0.3s ease; 
+               border: none; background: none; padding: 0;">
 
+        <img src="./img/up_kb.png" alt="Scroll to top" width="50">
+    </button>
+    <script>
+        /* ===== SCROLL TOP ===== */
+        const btnScrollTop = document.getElementById('btnScrollTop');
+
+        function adjustButtonPosition() {
+            if (window.innerWidth <= 768) {
+                btnScrollTop.style.bottom = '80px';
+            } else {
+                btnScrollTop.style.bottom = '40px';
+            }
+        }
+
+        window.addEventListener('resize', adjustButtonPosition);
+        adjustButtonPosition();
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btnScrollTop.style.opacity = '1';
+                btnScrollTop.style.pointerEvents = 'auto';
+            } else {
+                btnScrollTop.style.opacity = '0';
+                btnScrollTop.style.pointerEvents = 'none';
+            }
+        });
+
+        btnScrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+
+        /* ===== SIDEBAR TOGGLE ===== */
+        const sidebar1 = document.getElementById('sidebar');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+        }
+
+
+        /* ===== SIDEBAR DROPDOWN ===== */
+        function toggleSidebarDropdown(btn) {
+            const dropdown = btn.closest('.sidebar-dropdown');
+            dropdown.classList.toggle('active');
+        }
+    </script>
     <!-- FOOTER -->
-    <footer>
-        <div class="footer-wrap">
-            <div class="footer-brand">
-                <strong style="font-size: medium;">SGR Collectibles</strong> 1:64 Die-cast Collection · bộ sưu tập xe mô hình 1:64
-                <div class="copyright">
-                    SINCE 2024 <b>by</b> SGR Collectibles.
+    <footer class="sgr-footer">
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <p class="mb-1 text-pixel">1:64 Die-cast Collection</p>
+                    <p class="small text-pixel">bộ sưu tập xe mô hình 1:64</p>
+                    <p class="mb-1 fw-bold">SINCE 2024 by SGR Collectibles™</p>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <ul class="nav flex-column align-items-start p-0">
+                        <li class="nav-item"><a href="index.html" class="nav-link ps-0">Trang chủ</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ps-0" data-bs-toggle="dropdown" href="#" role="button">Bộ sưu tập</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="bst-hw.html">Hot Wheels</a>
+                                </li>
+                                <li><a class="dropdown-item" href="bst-m-box.html">Macthbox</a>
+                                </li>
+                                <li><a class="dropdown-item" href="bst-tmc.html">Tomica</a>
+                                </li>
+                                <li><a class="dropdown-item" href="bst-mjr.html">Majorette</a>
+                                </li>
+                                <li><a class="dropdown-item" href="bst-p-race.html">Pop Race</a>
+                                </li>
+                                <li><a class="dropdown-item" href="bst-brg.html">Burago</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle ps-0" data-bs-toggle="dropdown" href="#" role="button">Shop</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="sale-bst.html">Sản Phẩm</a>
+                                </li>
+                                <li><a class="dropdown-item" href="tl-bst.html">Thanh lý</a>
+                                </li>
+                                <li><a class="dropdown-item" href="sold-bst.html">Sold/ Sold out</a>
+                                </li>
+                                <li><a class="dropdown-item" href="https://docs.google.com/spreadsheets/d/1VrywcS-HlmKHSEtWk7kA7-ZZyxMc9CjTkAMhlpKvMdw/edit?usp=sharing">Bảng đánh giá</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <a href="contact.bst.html" class="nav-link ps-0">Contact</a>
+                        </li>
+                        <li class="nav-item"><a href="about-bst.html" class="nav-link ps-0">About</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <p class="mb-1 text-pixel">liên hệ qua mail:</p>
+                    <p class="fw-bold">sgrcollectibles04@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/vinhan.huynhpham.1" class="me-2"><i class="bi bi-facebook" title="Facebook"></i></a>
+                        <a href="https://www.instagram.com/vinh_an_huynh_pham_001/" class="me-2"><i class="bi bi-instagram" title="Instagram"></i></a>
+                        <a href="https://zalo.me/0944835045"><i class="bi bi-telephone-fill" title="Zalo"></i></a>
+                    </div>
                 </div>
             </div>
 
-            <div class="footer-links">
-                <a href="https://www.facebook.com/vinhan.huynhpham.1">Facebook</a>
-                <a href="https://www.instagram.com/vinh_an_huynh_pham_001/">Instagram</a>
-                <a href="https://zalo.me/0944835045">Zalo</a>
-                <a href="contact-bst.html">Contact</a>
+            <div class="logo-container">
+                <img src="./img/SGR GFT.png" alt="SGR Logo" class="main-logo-img">
+                <div class="sticker-layer">
+                    <img src="./img/csgt.svg" alt="deco" class="sticker st-1">
+                    <img src="./img/CTCX_SG.svg" alt="deco" class="sticker st-2">
+                    <img src="./img/vf3.svg" alt="deco" class="sticker st-3">
+                    <img src="./img/icon4.svg" alt="deco" class="sticker st-4">
+                </div>
             </div>
         </div>
     </footer>

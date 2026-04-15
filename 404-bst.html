@@ -324,67 +324,77 @@
         }
         /* ===== FOOTER ===== */
         
-        footer {
-            margin-top: auto;
-            border-top: 1px solid rgba(30, 63, 63);
-            padding: 32px 56px;
-            font-size: 13px;
-        }
-        
-        .footer-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-        }
-        
-        .footer-brand {
-            max-width: 260px;
-        }
-        
-        .footer-brand strong {
-            display: block;
-            margin-bottom: 6px;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 32px;
-        }
-        
-        .footer-links a {
-            text-decoration: none;
-            color: inherit;
-            opacity: .6;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1
-        }
-        
-        .copyright {
-            margin-top: 16px;
-            font-size: 12px;
-            opacity: .45;
-        }
-        
-        @media(max-width:1024px) {
-            .main {
-                grid-template-columns: 1fr
-            }
-            .right {
-                display: none
-            }
-            .title {
-                font-size: 64px
-            }
-            footer {
-                padding: 24px
-            }
-            .footer-wrap {
-                flex-direction: column
-            }
-        }
+        /* LAYER 1: Nền Footer */
+.sgr-footer {
+    position: relative;
+    background-color: var(--sgr-teal); /* Màu nền dự phòng */
+    
+    /* Chèn ảnh SVG của bạn */
+    background-image: url('./img/bg_ft.svg'); 
+    
+    /* Đảm bảo ảnh nền nằm dưới cùng và dàn ngang hết cỡ */
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover; /* Hoặc 'contain' nếu bạn muốn thấy toàn bộ skyline không bị mất hình */
+    
+    /* Quan trọng: Triệt tiêu khoảng hở để logo chạm đáy */
+    padding: 60px 0 0 0 !important; 
+    overflow: hidden;
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+}
+
+/* LAYER 2: Nội dung & Logo */
+.footer-content {
+    /* Đảm bảo container này bao quát toàn bộ độ rộng bạn muốn logo đạt tới */
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+.logo-container {
+    position: relative;
+    width: 100%;
+    line-height: 0; /* Khử khoảng hở dưới chân ảnh */
+    margin-top: 40px;
+}
+
+.main-logo-img {
+    /* Logo sẽ tự giãn bằng chính xác độ rộng của cụm thông tin bên trên */
+    width: 100%; 
+    height: auto;
+    display: block; /* Ép chạm đáy hoàn toàn */
+}
+
+/* Khử màu xanh mặc định của link trình duyệt */
+.nav-link {
+    color: white !important;
+}
+
+/* LAYER 3: Sticker (Dán đè lên logo) */
+.sticker-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.social-icons a{color: #fff;}
+
+.sticker {
+    position: absolute;
+    width: 5%; /* Sticker sẽ co giãn theo kích thước logo */
+    height: auto;
+    filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.4));
+}
+
+/* Tọa độ các điểm xanh lá của bạn (tính theo %) */
+.st-1 { top: 12%; left: 18%; transform: rotate(-10deg); }
+.st-2 { top: 62%; left: 28%; transform: rotate(15deg); }
+.st-3 { top: 52%; left: 52%; transform: rotate(-5deg); }
+.st-4 { top: 58%; left: 77%; transform: rotate(10deg); }
         /* ===== RESPONSIVE ===== */
         
         @media(min-width:768px) {
@@ -634,23 +644,65 @@
     </section>
 
     <!-- FOOTER -->
-    <footer>
-        <div class="footer-wrap">
-            <div class="footer-brand">
-                <strong style="font-size: medium;">SGR Collectibles</strong> 1:64 Die-cast Collection · bộ sưu tập xe mô hình 1:64
-                <div class="copyright">
-                    SINCE 2024 <b>by</b> SGR Collectibles.
-                </div>
+    <footer class="sgr-footer">
+    <div class="container footer-content">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <p class="mb-1 text-pixel">1:64 Die-cast Collection</p>
+                <p class="small text-pixel">bộ sưu tập xe mô hình 1:64</p>
+                <p class="mb-1 fw-bold">SINCE 2024 by SGR Collectibles™</p>
             </div>
 
-            <div class="footer-links">
-                <a href="https://www.facebook.com/vinhan.huynhpham.1">Facebook</a>
-                <a href="https://www.instagram.com/vinh_an_huynh_pham_001/">Instagram</a>
-                <a href="https://zalo.me/0944835045">Zalo</a>
-                <a href="contact-bst.html">Contact</a>
+            <div class="col-md-4 mb-4">
+                <ul class="nav flex-column align-items-start p-0">
+                    <li class="nav-item"><a href="index.html" class="nav-link ps-0">Trang chủ</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle ps-0" data-bs-toggle="dropdown" href="#" role="button">Bộ sưu tập</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="bst-hw.html">Hot Wheels</a></li>
+                            <li><a class="dropdown-item" href="bst-m-box.html">Macthbox</a></li>
+                            <li><a class="dropdown-item" href="bst-tmc.html">Tomica</a></li>
+                            <li><a class="dropdown-item" href="bst-mjr.html">Majorette</a></li>
+                            <li><a class="dropdown-item" href="bst-p-race.html">Pop Race</a></li>
+                            <li><a class="dropdown-item" href="bst-brg.html">Burago</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle ps-0" data-bs-toggle="dropdown" href="#" role="button">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="sale-bst.html">Sản Phẩm</a></li>
+                                <li><a class="dropdown-item" href="tl-bst.html">Thanh lý</a></li>
+                                <li><a class="dropdown-item" href="sold-bst.html">Sold/ Sold out</a></li>
+                                <li><a class="dropdown-item" href="https://docs.google.com/spreadsheets/d/1VrywcS-HlmKHSEtWk7kA7-ZZyxMc9CjTkAMhlpKvMdw/edit?usp=sharing">Bảng đánh giá</a></li>
+                        </ul>
+                    </li>
+                    <a href="contact.bst.html" class="nav-link ps-0">Contact</a></li>
+                        <li class="nav-item"><a href="about-bst.html" class="nav-link ps-0">About</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <p class="mb-1 text-pixel">liên hệ qua mail:</p>
+                <p class="fw-bold">sgrcollectibles04@gmail.com</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/vinhan.huynhpham.1" class="me-2"><i class="bi bi-facebook" title="Facebook"></i></a>
+                    <a href="https://www.instagram.com/vinh_an_huynh_pham_001/" class="me-2"><i class="bi bi-instagram" title="Instagram"></i></a>
+                    <a href="https://zalo.me/0944835045"><i class="bi bi-telephone-fill" title="Zalo"></i></a>
+                </div>
             </div>
         </div>
-    </footer>
+
+        <div class="logo-container">
+            <img src="./img/SGR GFT.png" alt="SGR Logo" class="main-logo-img">
+            <div class="sticker-layer">
+                <img src="./img/csgt.svg" alt="deco" class="sticker st-1">
+                <img src="./img/CTCX_SG.svg" alt="deco" class="sticker st-2">
+                <img src="./img/vf3.svg" alt="deco" class="sticker st-3">
+                <img src="./img/icon4.svg" alt="deco" class="sticker st-4">
+            </div>
+        </div>
+    </div>
+</footer>
     <script>
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
