@@ -1057,12 +1057,22 @@
 <script>
     // 1. Cấu hình dữ liệu ngày lễ
     const VN_HOLIDAYS = {
-        "01-01": { text: "Chúc mừng Năm Mới!", music: "" },
-        "30-04": { text: "Chào mừng ngày Giải phóng miền Nam 30/4!", music: "./img/audio/304.mp3" },
-        "07-05": { text: "Kỷ niệm chiến thắng Điện Biên Phủ 7/5!", music: "./img/audio/75db.mp3" },
-        "02-09": { text: "Chào mừng ngày Quốc khánh 2/9!", music: "./img/audio/29vn.mp3" },
-        "24-12": { text: "Giáng sinh an lành!", music: "" }
-    };
+    "30-04": { 
+        text: "Chào mừng ngày Giải phóng miền Nam 30-04-2026!", 
+        subText: "Hôm nay bạn đã sẵn sàng cháy hết mình với Tổ Quốc chưa?",
+        music: "./img/audio/304.mp3" 
+    },
+    "07-05": { 
+        text: "Kỷ niệm chiến thắng Điện Biên Phủ 07-05-2026!", 
+        subText: "Cùng ôn lại hào khí cha ông ta nhé!",
+        music: "./img/audio/75db.mp3" 
+    },
+    "02-09": { 
+        text: "Chào mừng ngày Quốc khánh 02-09-2026!", 
+        subText: "Bạn đã sẵn sàng đón Tết Độc Lập chưa?",
+        music: "./img/audio/29vn.mp3" 
+    }
+};
 
     // 2. Các hàm lấy thông tin động
     function getSystemLocation() {
@@ -1090,24 +1100,42 @@
 
     // 3. Database nội dung Chat
     function getSGRDatabase() {
-        const g = getDynamicGreeting();
-        return {
-            start: {
-                text: `Chào mừng bạn đến với SGR Collectibles! ${g.text} Bạn đã sẵn sàng khám phá?`,
-                music: g.music,
-                options: [{ label: "Y", next: "show_collection" }, { label: "N", next: "bye" }]
-            },
-            show_collection: {
-                text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
-                options: [{ label: "OK", next: "start" }]
-            },
-            bye: {
-                text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
-                options: [],
-                autoReset: true 
-            }
-        };
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const dateKey = `${day}-${month}`;
+    
+    let mainText = "";
+    let musicUrl = null;
+
+    if (VN_HOLIDAYS[dateKey]) {
+        // Nếu là ngày lễ: Lấy text + subText đặc biệt
+        const holiday = VN_HOLIDAYS[dateKey];
+        mainText = `${holiday.text} ${holiday.subText}`;
+        musicUrl = holiday.music;
+    } else {
+        // Nếu ngày thường: Quay về câu chào mặc định
+        mainText = `${getSystemLocation()} hôm nay thế nào? Bạn đã sẵn sàng khám phá?`;
     }
+
+    return {
+        start: {
+            text: `Chào mừng bạn đến với SGR Collectibles! ${mainText}`,
+            music: musicUrl,
+            options: [{ label: "Y", next: "show_collection" }, { label: "N", next: "bye" }]
+        },
+        // ... các node khác (show_collection, bye) giữ nguyên như cũ
+        show_collection: {
+            text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
+            options: [{ label: "OK", next: "start" }]
+        },
+        bye: {
+            text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
+            options: [],
+            autoReset: true 
+        }
+    };
+}
 
     // 4. Hàm xử lý nhạc nền (Background Music)
     function playSGRMusic(url) {
