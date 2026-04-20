@@ -800,6 +800,7 @@
                 <div class="sgr-chat-wrapper" style="display: inline;">
                     <h1 class="sgr-typing" id="typewriter" style="display: inline;"></h1>
                     <div id="chat-options" style="display: inline-flex; margin-left: 10px;"></div>
+                    <audio id="sgr-audio" style="display:none;"></audio>
                 </div>
             </div>
 
@@ -1053,128 +1054,144 @@
 
         overlay.onclick = toggleMenu;
     </script>
-    <script>
-        /* ---------------------------------------------------------
-                   1. DANH SÁCH NGÀY LỄ (List này bạn có thể tự thêm/sửa)
-                   --------------------------------------------------------- */
-        const VN_HOLIDAYS = {
-            "01-01": "Chúc mừng Năm Mới!",
-            "14-02": "Valentine vui vẻ!",
-            "08-03": "Chúc mừng ngày Quốc tế Phụ nữ 8/3!",
-            "30-04": "Chào mừng ngày Giải phóng miền Nam 30/4!",
-            "01-05": "Chào mừng ngày Quốc tế Lao động 1/5!",
-            "19-05": "Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh!",
-            "02-09": "Chào mừng ngày Quốc khánh 2/9!",
-            "20-10": "Chúc mừng ngày Phụ nữ Việt Nam 20/10!",
-            "20-11": "Chào mừng ngày Nhà giáo Việt Nam 20/11!",
-            "24-12": "Giáng sinh an lành!",
-        };
+   <script>
+    /* ---------------------------------------------------------
+       1. DANH SÁCH NGÀY LỄ & NHẠC HIỆU (Cấu hình tại đây)
+       Cú pháp: "Ngày-Tháng": { text: "Lời chào", music: "Link nhạc" }
+       --------------------------------------------------------- */
+    const VN_HOLIDAYS = {
+        "01-01": { text: "Chúc mừng Năm Mới!", music: "" },
+        "14-02": { text: "Valentine vui vẻ!", music: "" },
+        "08-03": { text: "Chúc mừng ngày Quốc tế Phụ nữ 8/3!", music: "" },
+        "07-05": { text: "Kỷ niệm chiến thắng Điện Biên Phủ 7/5!", music: "./img/audio/GPDB_7-5.mp3" }, // Ví dụ nhạc
+        "30-04": { text: "Chào mừng ngày Giải phóng miền Nam 30/4!", music: "./img/audio/GPMN_30-4.mp3" },
+        "01-05": { text: "Chào mừng ngày Quốc tế Lao động 1/5!", music: "" },
+        "19-05": { text: "Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh!", music: "" },
+        "02-09": { text: "Chào mừng ngày Quốc khánh 2/9!", music: "./img/audio/TNDL_QC.mp3" },
+        "20-10": { text: "Chúc mừng ngày Phụ nữ Việt Nam 20/10!", music: "" },
+        "20-11": { text: "Chào mừng ngày Nhà giáo Việt Nam 20/11!", music: "" },
+        "24-12": { text: "Giáng sinh an lành!", music: "" },
+    };
 
-        /* ---------------------------------------------------------
-           2. LOGIC HỆ THỐNG
-           --------------------------------------------------------- */
-        function getSystemLocation() {
-            try {
-                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                if (timeZone.includes("Saigon") || timeZone.includes("Ho_Chi_Minh")) return "Sài Gòn";
-                if (timeZone.includes("Hanoi")) return "Hà Nội";
-                return "Việt Nam";
-            } catch (e) {
-                return "Bạn";
+    /* ---------------------------------------------------------
+       2. LOGIC HỆ THỐNG (Xử lý địa điểm, ngày tháng, âm thanh)
+       --------------------------------------------------------- */
+    
+    // Hàm phát nhạc hiệu
+    function playSGRMusic(url) {
+        const audio = document.getElementById('sgr-audio');
+        if (url && audio) {
+            audio.src = url;
+            audio.volume = 0.5; // Âm lượng 50%
+            audio.play().catch(e => console.log("Hệ thống: Autoplay bị chặn bởi trình duyệt. Nhạc sẽ phát khi bạn tương tác."));
+            
+            // Nhạc phát xong 1 lần rồi tự dừng nguồn
+            audio.onended = () => { audio.src = ""; };
+        }
+    }
+
+    function getSystemLocation() {
+        try {
+            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            if (timeZone.includes("Saigon") || timeZone.includes("Ho_Chi_Minh")) return "Sài Gòn";
+            if (timeZone.includes("Hanoi")) return "Hà Nội";
+            return "Việt Nam";
+        } catch (e) { return "Bạn"; }
+    }
+
+    function getDynamicGreeting() {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const dateKey = `${day}-${month}`;
+        const year = now.getFullYear();
+
+        // Kiểm tra nếu là ngày đặc biệt
+        if (VN_HOLIDAYS[dateKey]) {
+            const holiday = VN_HOLIDAYS[dateKey];
+            // Nếu có nhạc thì gọi hàm phát nhạc
+            if (holiday.music) {
+                playSGRMusic(holiday.music);
             }
+            return `${holiday.text} ${year}?`;
         }
 
-        function getDynamicGreeting() {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const dateKey = `${day}-${month}`;
-            const year = now.getFullYear();
+        // Ngày bình thường
+        const loc = getSystemLocation();
+        return `${loc} hôm nay thế nào?`;
+    }
 
-            if (VN_HOLIDAYS[dateKey]) {
-                return `${VN_HOLIDAYS[dateKey]} ${year}?`;
-            }
-
-            const loc = getSystemLocation();
-            return `${loc} hôm nay thế nào?`;
+    /* ---------------------------------------------------------
+       3. CƠ SỞ DỮ LIỆU HỘI THOẠI (SGR Database)
+       --------------------------------------------------------- */
+    const sgrDatabase = {
+        start: {
+            text: `Chào mừng bạn đến với SGR Collectibles! ${getDynamicGreeting()} Bạn đã sẵn sàng khám phá?`,
+            options: [
+                { label: "Y", next: "show_collection" }, 
+                { label: "N", next: "bye" }
+            ]
+        },
+        show_collection: {
+            text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
+            options: [
+                { label: "OK", next: "start" }
+            ]
+        },
+        bye: {
+            text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
+            options: [],
+            autoReset: true 
         }
+    };
 
-        /* ---------------------------------------------------------
-           3. CƠ SỞ DỮ LIỆU HỘI THOẠI (SGR Database)
-           --------------------------------------------------------- */
-        const sgrDatabase = {
-            start: {
-                text: `Chào mừng bạn đến với SGR Collectibles! ${getDynamicGreeting()} Bạn đã sẵn sàng khám phá?`,
-                options: [{
-                    label: "Y",
-                    next: "show_collection"
-                }, {
-                    label: "N",
-                    next: "bye"
-                }]
-            },
-            show_collection: {
-                text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
-                options: [{
-                    label: "OK",
-                    next: "start"
-                }]
-            },
-            bye: {
-                text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
-                options: [], // Xóa nút Reset thủ công để máy tự làm
-                autoReset: true // Đánh dấu để hệ thống biết cần tự động quay về
-            }
-        };
+    /* ---------------------------------------------------------
+       4. HÀM VẬN HÀNH (Typewriter + Auto Reset)
+       --------------------------------------------------------- */
+    function runSGRChat(nodeKey) {
+        const node = sgrDatabase[nodeKey];
+        const typewriterEl = document.getElementById('typewriter');
+        const optionsContainer = document.getElementById('chat-options');
 
-        /* ---------------------------------------------------------
-           4. HÀM VẬN HÀNH (Typewriter + Auto Reset)
-           --------------------------------------------------------- */
-        function runSGRChat(nodeKey) {
-            const node = sgrDatabase[nodeKey];
-            const typewriterEl = document.getElementById('typewriter');
-            const optionsContainer = document.getElementById('chat-options');
+        typewriterEl.innerHTML = "";
+        optionsContainer.innerHTML = "";
 
-            typewriterEl.innerHTML = "";
-            optionsContainer.innerHTML = "";
+        let i = 0;
+        function typeEffect() {
+            if (i < node.text.length) {
+                typewriterEl.innerHTML += node.text.charAt(i);
+                i++;
+                setTimeout(typeEffect, 40);
+            } else {
+                // Hiển thị nút bấm Y/N/OK sau khi gõ xong
+                if (node.options && node.options.length > 0) {
+                    node.options.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = 'chat-btn';
+                        btn.innerHTML = opt.label;
+                        btn.onclick = () => {
+                            if (opt.next) runSGRChat(opt.next);
+                            else if (opt.action) opt.action();
+                        };
+                        optionsContainer.appendChild(btn);
+                    });
+                }
 
-            let i = 0;
-
-            function typeEffect() {
-                if (i < node.text.length) {
-                    typewriterEl.innerHTML += node.text.charAt(i);
-                    i++;
-                    setTimeout(typeEffect, 40);
-                } else {
-                    // Hiển thị nút bấm nếu có
-                    if (node.options && node.options.length > 0) {
-                        node.options.forEach(opt => {
-                            const btn = document.createElement('button');
-                            btn.className = 'chat-btn';
-                            btn.innerHTML = opt.label;
-                            btn.onclick = () => {
-                                if (opt.next) runSGRChat(opt.next);
-                                else if (opt.action) opt.action();
-                            };
-                            optionsContainer.appendChild(btn);
-                        });
-                    }
-
-                    // LOGIC QUAN TRỌNG: Tự động quay về sau 5 giây
-                    if (node.autoReset) {
-                        setTimeout(() => {
-                            runSGRChat('start');
-                        }, 3000); // 3000ms = 3 giây
-                    }
+                // Tự động quay về sau 3 giây nếu là chế độ chờ (bye)
+                if (node.autoReset) {
+                    setTimeout(() => {
+                        runSGRChat('start');
+                    }, 3000); 
                 }
             }
-            typeEffect();
         }
+        typeEffect();
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            runSGRChat('start');
-        });
-    </script>
+    window.addEventListener('DOMContentLoaded', () => {
+        runSGRChat('start');
+    });
+</script>
 
 
     <script>
