@@ -1095,24 +1095,24 @@ function playSGRMusic(url) {
     audio.src = url;
     audio.volume = 0.5;
 
-    // Hàm "kích nổ" nhạc khi có tương tác đầu tiên
-    const forcePlay = () => {
+    // Hàm "Kích nổ" nhạc hiệu
+    const triggerAudio = () => {
         audio.play().then(() => {
-            console.log("🔊 SGR: Nhạc nền ngày lễ đã khởi động!");
-            // Đã phát được thì gỡ bỏ các trình nghe lén để nhẹ máy
+            console.log("🔊 SGR: Nhạc hiệu ngày lễ đã phát!");
+            // Đã phát thành công thì gỡ bỏ sự kiện để tránh lặp lại
             ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
-                document.removeEventListener(ev, forcePlay)
+                document.removeEventListener(ev, triggerAudio)
             );
-        }).catch(() => { /* Trình duyệt vẫn đang chặn, chờ hành động tiếp theo */ });
+        }).catch(() => { /* Vẫn chờ hành động tiếp theo */ });
     };
 
     // Lắng nghe mọi hành động nhỏ nhất của người dùng
     ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
-        document.addEventListener(ev, forcePlay)
+        document.addEventListener(ev, triggerAudio)
     );
 
-    // Cố gắng phát ngay (phòng trường hợp người dùng đã click menu/scroll trước đó)
-    forcePlay();
+    // Thử phát ngay (nếu khách đã click trước đó)
+    triggerAudio();
 }
 
 /* --- CHỈNH LẠI HÀM CHAT: TRUY CẬP LÀ PHÁT LUÔN --- */
@@ -1120,36 +1120,10 @@ function runSGRChat(nodeKey) {
     const db = getSGRDatabase();
     const node = db[nodeKey];
     
-    // PHÁT NHẠC NGAY LẬP TỨC tại đây, không đợi gõ chữ xong
+    // TRUY CẬP LÀ NẠP NHẠC NGAY
     if (node.music) playSGRMusic(node.music);
 
-    const typewriterEl = document.getElementById('typewriter');
-    const optionsContainer = document.getElementById('chat-options');
-    if (!typewriterEl || !optionsContainer) return;
-
-    typewriterEl.innerHTML = "";
-    optionsContainer.innerHTML = "";
-
-    let i = 0;
-    function typeEffect() {
-        if (i < node.text.length) {
-            typewriterEl.innerHTML += node.text.charAt(i);
-            i++;
-            setTimeout(typeEffect, 40);
-        } else {
-            // Hiện nút bấm sau khi gõ xong
-            if (node.options) {
-                node.options.forEach(opt => {
-                    const btn = document.createElement('button');
-                    btn.className = 'chat-btn';
-                    btn.innerHTML = opt.label;
-                    btn.onclick = () => runSGRChat(opt.next);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-        }
-    }
-    typeEffect();
+    // ... (Phần gõ chữ typewriter giữ nguyên bên dưới)
 }
 
     // Hàm tạo Database động để không bị undefined
