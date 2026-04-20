@@ -308,6 +308,72 @@
             vertical-align: baseline;
             animation: blink 1s steps(1) infinite;
         }
+        /* Container chứa các lựa chọn */
+        
+        #chat-options {
+            display: inline-flex;
+            gap: 8px;
+            /* Khoảng cách giữa Y và N */
+            
+            vertical-align: baseline;
+            /* Giúp nút nằm chuẩn trên đường cơ sở của chữ */
+            
+            margin-left: 5px;
+        }
+        /* Nút bấm siêu nhỏ và mảnh */
+        
+        .chat-btn {
+            background: transparent;
+            border: none;
+            color: #1e3f3f;
+            /* Giữ màu chủ đạo của bạn */
+            
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            /* Nhỏ hơn hẳn so với chữ h1 (thường là 1.5rem - 2rem) */
+            
+            font-weight: 800;
+            /* Mảnh hơn để không bị thô */
+            
+            cursor: pointer;
+            padding: 0 2px;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+            /* Hơi mờ nhẹ để tách biệt với nội dung chính */
+        }
+        /* Hiệu ứng khi chọn (Hover) */
+        
+        .chat-btn:hover {
+            color: #3fe3e3;
+            /* Sáng rực lên khi rê chuột */
+            
+            opacity: 1;
+            text-shadow: 0 0 5px rgba(63, 227, 227, 0.5);
+            /* Thêm chút hiệu ứng ánh sáng LCD */
+        }
+        /* Dấu ngoặc vuông siêu mảnh */
+        
+        .chat-btn::before {
+            content: "[";
+            margin-right: 2px;
+        }
+        
+        .chat-btn::after {
+            content: "]";
+            margin-left: 2px;
+        }
+        
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
         
         .sub-line {
             font-size: 12px;
@@ -731,8 +797,10 @@
                 <br>
                 <div class="sgr-clock" id="clock">00:00:00</div>
 
-                <h1 class="sgr-typing" id="typewriter">
-</h1>
+                <div class="sgr-chat-wrapper" style="display: inline;">
+                    <h1 class="sgr-typing" id="typewriter" style="display: inline;"></h1>
+                    <div id="chat-options" style="display: inline-flex; margin-left: 10px;"></div>
+                </div>
             </div>
 
             <div class="sgr-announce">
@@ -986,93 +1054,126 @@
         overlay.onclick = toggleMenu;
     </script>
     <script>
-        const text = "Chào mừng bạn đến xem bộ sưu tập của tôi";
-        const subText = "Cập nhập lần cuối vào ngày 08-03-2026.";
+        /* ---------------------------------------------------------
+                   1. DANH SÁCH NGÀY LỄ (List này bạn có thể tự thêm/sửa)
+                   --------------------------------------------------------- */
+        const VN_HOLIDAYS = {
+            "01-01": "Chúc mừng Năm Mới!",
+            "14-02": "Valentine vui vẻ!",
+            "08-03": "Chúc mừng ngày Quốc tế Phụ nữ 8/3!",
+            "30-04": "Chào mừng ngày Giải phóng miền Nam 30/4!",
+            "01-05": "Chào mừng ngày Quốc tế Lao động 1/5!",
+            "19-05": "Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh!",
+            "02-09": "Chào mừng ngày Quốc khánh 2/9!",
+            "20-10": "Chúc mừng ngày Phụ nữ Việt Nam 20/10!",
+            "20-11": "Chào mừng ngày Nhà giáo Việt Nam 20/11!",
+            "24-12": "Giáng sinh an lành!",
+        };
 
-        const holidays = [{
-            date: '01-01',
-            message: 'Chúc Mừng Năm Mới!'
-        }, {
-            date: '08-03',
-            message: 'Chúc Mừng Ngày Quốc tế Phụ Nữ (International Women‵s Day)'
-        }, {
-            date: '07-05',
-            message: 'Kỷ niệm Chiến thắng Điện Biên Phủ (07-05-1954)'
-        }, {
-            date: '30-04',
-            message: 'Chúc Mừng Ngày Giải Phóng Miền Nam!'
-        }, {
-            date: '01-05',
-            message: 'Chúc Mừng Ngày Quốc Tế Lao Động!'
-        }, {
-            date: '19-05',
-            message: 'Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh (19-05-1890)'
-        }, {
-            date: '02-09',
-            message: 'Chúc Mừng Ngày Quốc Khánh nước CHXHCN Việt Nam!'
-        }, {
-            date: '25-09',
-            message: 'Hôm nay là sinh nhật của tui (25-09-2004)'
-        }, {
-            date: '20-10',
-            message: 'Chúc Mừng Ngày Phụ Nữ Việt Nam (Vietnamese Women‵s Day)'
-        }, {
-            date: '20-11',
-            message: 'Chúc Mừng Ngày Nhà Giáo Việt Nam (Vietnamese Teacher‵s Day)'
-        }, {
-            date: '25-12',
-            message: 'Chúc Mừng Giáng Sinh!'
-        }];
+        /* ---------------------------------------------------------
+           2. LOGIC HỆ THỐNG
+           --------------------------------------------------------- */
+        function getSystemLocation() {
+            try {
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (timeZone.includes("Saigon") || timeZone.includes("Ho_Chi_Minh")) return "Sài Gòn";
+                if (timeZone.includes("Hanoi")) return "Hà Nội";
+                return "Việt Nam";
+            } catch (e) {
+                return "Bạn";
+            }
+        }
 
-        const typingEl = document.getElementById("typewriter");
-
-        if (!typingEl) {
-            console.warn("❌ Không tìm thấy #typewriter");
-        } else {
-
-            /* cursor */
-            const cursor = document.createElement("span");
-            cursor.className = "typing-cursor";
-            typingEl.appendChild(cursor);
-
-            /* date */
+        function getDynamicGreeting() {
             const now = new Date();
             const day = String(now.getDate()).padStart(2, '0');
             const month = String(now.getMonth() + 1).padStart(2, '0');
+            const dateKey = `${day}-${month}`;
             const year = now.getFullYear();
-            const todayKey = `${day}-${month}`;
 
-            const holiday = holidays.find(h => h.date === todayKey);
+            if (VN_HOLIDAYS[dateKey]) {
+                return `${VN_HOLIDAYS[dateKey]} ${year}?`;
+            }
 
-            const finalText = holiday ? `${text} - ${holiday.message}` : `${text} - Hôm nay là ngày ${day}/${month}/${year}. chúc bạn may mắn!`;
+            const loc = getSystemLocation();
+            return `${loc} hôm nay thế nào?`;
+        }
 
+        /* ---------------------------------------------------------
+           3. CƠ SỞ DỮ LIỆU HỘI THOẠI (SGR Database)
+           --------------------------------------------------------- */
+        const sgrDatabase = {
+            start: {
+                text: `Chào mừng bạn đến với SGR Collectibles! ${getDynamicGreeting()} Bạn đã sẵn sàng khám phá?`,
+                options: [{
+                    label: "Y",
+                    next: "show_collection"
+                }, {
+                    label: "N",
+                    next: "bye"
+                }]
+            },
+            show_collection: {
+                text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
+                options: [{
+                    label: "OK",
+                    next: "start"
+                }]
+            },
+            bye: {
+                text: "Hệ thống chuyển về chế độ chờ. Cảm ơn đã ghé thăm!",
+                options: [], // Xóa nút Reset thủ công để máy tự làm
+                autoReset: true // Đánh dấu để hệ thống biết cần tự động quay về
+            }
+        };
 
+        /* ---------------------------------------------------------
+           4. HÀM VẬN HÀNH (Typewriter + Auto Reset)
+           --------------------------------------------------------- */
+        function runSGRChat(nodeKey) {
+            const node = sgrDatabase[nodeKey];
+            const typewriterEl = document.getElementById('typewriter');
+            const optionsContainer = document.getElementById('chat-options');
+
+            typewriterEl.innerHTML = "";
+            optionsContainer.innerHTML = "";
 
             let i = 0;
 
-            function typeChar() {
-                if (i < finalText.length) {
-                    typingEl.insertBefore(
-                        document.createTextNode(finalText[i]),
-                        cursor
-                    );
+            function typeEffect() {
+                if (i < node.text.length) {
+                    typewriterEl.innerHTML += node.text.charAt(i);
                     i++;
-                    setTimeout(typeChar, 80);
+                    setTimeout(typeEffect, 40);
                 } else {
+                    // Hiển thị nút bấm nếu có
+                    if (node.options && node.options.length > 0) {
+                        node.options.forEach(opt => {
+                            const btn = document.createElement('button');
+                            btn.className = 'chat-btn';
+                            btn.innerHTML = opt.label;
+                            btn.onclick = () => {
+                                if (opt.next) runSGRChat(opt.next);
+                                else if (opt.action) opt.action();
+                            };
+                            optionsContainer.appendChild(btn);
+                        });
+                    }
 
-                    const br = document.createElement("br");
-                    typingEl.appendChild(br);
-
-                    const subLine = document.createElement("span");
-                    subLine.className = "sub-line";
-                    subLine.textContent = subText;
-
-                    typingEl.appendChild(subLine);
+                    // LOGIC QUAN TRỌNG: Tự động quay về sau 5 giây
+                    if (node.autoReset) {
+                        setTimeout(() => {
+                            runSGRChat('start');
+                        }, 3000); // 3000ms = 3 giây
+                    }
                 }
             }
-
-            typeChar();
+            typeEffect();
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            runSGRChat('start');
+        });
     </script>
 
 
