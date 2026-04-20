@@ -1140,38 +1140,43 @@
     }
 
     function runSGRChat(nodeKey) {
-        const db = getSGRDatabase(); // Luôn lấy data mới nhất
-        const node = db[nodeKey];
-        const typewriterEl = document.getElementById('typewriter');
-        const optionsContainer = document.getElementById('chat-options');
+    const db = getSGRDatabase();
+    const node = db[nodeKey];
+    
+    // --- KHÚC NÀY LÀM ĐƠN GIẢN: PHÁT NHẠC NGAY ---
+    if (node.music) {
+        playSGRMusic(node.music); 
+    }
+    // ---------------------------------------------
 
-        if (!typewriterEl || !optionsContainer) return;
+    const typewriterEl = document.getElementById('typewriter');
+    const optionsContainer = document.getElementById('chat-options');
+    if (!typewriterEl || !optionsContainer) return;
 
-        typewriterEl.innerHTML = "";
-        optionsContainer.innerHTML = "";
+    typewriterEl.innerHTML = "";
+    optionsContainer.innerHTML = "";
 
-        let i = 0;
-        function typeEffect() {
-            if (i < node.text.length) {
-                typewriterEl.innerHTML += node.text.charAt(i);
-                i++;
-                setTimeout(typeEffect, 40);
-            } else {
-                if (node.music) playSGRMusic(node.music);
-                if (node.options) {
-                    node.options.forEach(opt => {
-                        const btn = document.createElement('button');
-                        btn.className = 'chat-btn';
-                        btn.innerHTML = opt.label;
-                        btn.onclick = () => runSGRChat(opt.next);
-                        optionsContainer.appendChild(btn);
-                    });
-                }
-                if (node.autoReset) setTimeout(() => runSGRChat('start'), 3000);
+    let i = 0;
+    function typeEffect() {
+        if (i < node.text.length) {
+            typewriterEl.innerHTML += node.text.charAt(i);
+            i++;
+            setTimeout(typeEffect, 40);
+        } else {
+            // Sau khi gõ xong chỉ hiện nút bấm, không cần gọi play music ở đây nữa
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'chat-btn';
+                    btn.innerHTML = opt.label;
+                    btn.onclick = () => runSGRChat(opt.next);
+                    optionsContainer.appendChild(btn);
+                });
             }
         }
-        typeEffect();
     }
+    typeEffect();
+}
 
     window.addEventListener('DOMContentLoaded', () => runSGRChat('start'));
 </script>
