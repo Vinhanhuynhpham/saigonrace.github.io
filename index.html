@@ -1059,19 +1059,32 @@
     const VN_HOLIDAYS = {
     "30-04": { 
         text: "Chào mừng ngày Giải phóng miền Nam 30-04-2026!", 
-        subText: "Hôm nay bạn đã sẵn sàng cháy hết mình với Tổ Quốc chưa?",
-        music: "./img/audio/304.mp3" 
-    },
-    "07-05": { 
-        text: "Kỷ niệm chiến thắng Điện Biên Phủ 07-05-2026!", 
-        subText: "Cùng ôn lại hào khí cha ông ta nhé!",
-        music: "./img/audio/75db.mp3" 
+        subText: "Hôm nay bạn đã sẵn sàng hết mình với Tổ Quốc chưa?",
+        music: "./img/audio/304.mp3",
+        responses: {
+            y: "Tuyệt vời! Hào khí ngút trời, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
+            n: "Ơ kìa, ngày vui thế này mà sao lại từ chối? Nghỉ ngơi tí rồi quay lại xem xe với tui nhé! 🤣"
+        }
     },
     "02-09": { 
         text: "Chào mừng ngày Quốc khánh 02-09-2026!", 
-        subText: "Bạn đã sẵn sàng đón Tết Độc Lập chưa?",
-        music: "./img/audio/29vn.mp3" 
+        subText: "Bạn đã sẵn sàng đón Tết Độc Lập cùng SGR chưa?",
+        music: "./img/audio/29vn.mp3",
+        responses: {
+            y: "Vui quá xá! Tinh thần độc lập tự do là bất diệt, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
+            n: "Hôm nay nghỉ lễ mà, đi chơi đâu đó rồi lát ghé SGR sau nha bạn ơi! 👋"
+        }
+    },
+    "07-05": { 
+        text: "Chào mừng ngày Quốc khánh 02-09-2026!", 
+        subText: "Ôn lại trận đánh huyền thoại cùng SGR chưa?",
+        music: "./img/audio/75db.mp3",
+        responses: {
+            y: "Tốt! Tôn trọng lịch sử, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
+            n: "Bạn mệt mỏi lắm đúng không? đi chơi đâu đó rồi lát ghé SGR sau nha bạn ơi!"
+        }
     }
+    // Thêm các ngày khác tương tự...
 };
 
     // 2. Các hàm lấy thông tin động
@@ -1105,32 +1118,31 @@
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const dateKey = `${day}-${month}`;
     
-    let mainText = "";
-    let musicUrl = null;
+    const holiday = VN_HOLIDAYS[dateKey];
+    
+    // 1. Xác định câu chào và nhạc
+    let mainText = holiday ? `${holiday.text} ${holiday.subText}` : `${getSystemLocation()} hôm nay thế nào? Bạn đã sẵn sàng khám phá?`;
+    let musicUrl = holiday ? holiday.music : null;
 
-    if (VN_HOLIDAYS[dateKey]) {
-        // Nếu là ngày lễ: Lấy text + subText đặc biệt
-        const holiday = VN_HOLIDAYS[dateKey];
-        mainText = `${holiday.text} ${holiday.subText}`;
-        musicUrl = holiday.music;
-    } else {
-        // Nếu ngày thường: Quay về câu chào mặc định
-        mainText = `${getSystemLocation()} hôm nay thế nào? Bạn đã sẵn sàng khám phá?`;
-    }
+    // 2. Xác định câu trả lời cho nút Y và N
+    let responseY = holiday ? holiday.responses.y : "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.";
+    let responseN = holiday ? holiday.responses.n : "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣";
 
     return {
         start: {
             text: `Chào mừng bạn đến với SGR Collectibles! ${mainText}`,
             music: musicUrl,
-            options: [{ label: "Y", next: "show_collection" }, { label: "N", next: "bye" }]
+            options: [
+                { label: "Y", next: "show_collection" },
+                { label: "N", next: "bye" }
+            ]
         },
-        // ... các node khác (show_collection, bye) giữ nguyên như cũ
         show_collection: {
-            text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
+            text: responseY,
             options: [{ label: "OK", next: "start" }]
         },
         bye: {
-            text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
+            text: responseN,
             options: [],
             autoReset: true 
         }
