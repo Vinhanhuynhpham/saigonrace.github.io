@@ -1088,12 +1088,26 @@
     }
 
     function playSGRMusic(url) {
-        const audio = document.getElementById('sgr-audio');
-        if (url && audio) {
-            audio.src = url;
-            audio.play().catch(() => console.log("Chờ tương tác để phát nhạc"));
+    const audio = document.getElementById('sgr-audio');
+    if (url && audio) {
+        audio.src = url;
+        audio.volume = 0.5;
+        
+        // Cố gắng phát nhạc
+        let playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                // Nếu bị chặn, đợi người dùng click 1 cái vào web là phát ngay
+                console.log("Trình duyệt chặn Autoplay, đợi tương tác...");
+                document.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true }); // Chỉ chạy 1 lần duy nhất khi click
+            });
         }
+        audio.onended = () => { audio.src = ""; };
     }
+}
 
     // Hàm tạo Database động để không bị undefined
     function getSGRDatabase() {
