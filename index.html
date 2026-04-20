@@ -1089,24 +1089,33 @@
 
     function playSGRMusic(url) {
     const audio = document.getElementById('sgr-audio');
-    if (url && audio) {
-        audio.src = url;
-        audio.volume = 0.5;
-        
-        // Cố gắng phát nhạc
-        let playPromise = audio.play();
+    if (!url || !audio) return;
 
-        if (playPromise !== undefined) {
-            playPromise.catch(error => {
-                // Nếu bị chặn, đợi người dùng click 1 cái vào web là phát ngay
-                console.log("Trình duyệt chặn Autoplay, đợi tương tác...");
-                document.addEventListener('click', () => {
-                    audio.play();
-                }, { once: true }); // Chỉ chạy 1 lần duy nhất khi click
-            });
-        }
-        audio.onended = () => { audio.src = ""; };
+    audio.src = url;
+    audio.volume = 0.5;
+
+    // Cố gắng phát ngay lập tức
+    const playPromise = audio.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            // Nếu bị chặn (như trong hình của bạn), 
+            // ta tạo một sự kiện "nghe lén" lần click đầu tiên của khách
+            console.log("SGR System: Nhạc đã sẵn sàng, chờ bạn chạm vào trang web để nổ máy...");
+            
+            const playOnInteraction = () => {
+                audio.play();
+                // Sau khi phát được rồi thì gỡ bỏ sự kiện này để không bị lặp
+                document.removeEventListener('click', playOnInteraction);
+                document.removeEventListener('touchstart', playOnInteraction);
+            };
+
+            document.addEventListener('click', playOnInteraction);
+            document.addEventListener('touchstart', playOnInteraction); // Cho điện thoại
+        });
     }
+    
+    audio.onended = () => { audio.src = ""; };
 }
 
     // Hàm tạo Database động để không bị undefined
