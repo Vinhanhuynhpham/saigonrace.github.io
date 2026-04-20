@@ -1087,35 +1087,71 @@
         return { text: `${getSystemLocation()} hôm nay thế nào?`, music: null };
     }
 
-    function playSGRMusic(url) {
+    // 1. Hàm phát nhạc thông minh
+function playSGRMusic(url) {
     const audio = document.getElementById('sgr-audio');
     if (!url || !audio) return;
 
     audio.src = url;
+    audio.loop = false; // Phát một lần rồi thôi đúng ý bạn
     audio.volume = 0.5;
 
-    // Cố gắng phát ngay lập tức
-    const playPromise = audio.play();
+    // Định nghĩa hàm để "kích nổ" âm thanh khi khách chạm vào web
+    const startPlay = () => {
+        audio.play().then(() => {
+            console.log("SGR System: Nhạc nền ngày lễ đã bắt đầu!");
+            // Sau khi phát thành công thì gỡ bỏ sự kiện để tránh lặp
+            document.removeEventListener('click', startPlay);
+            document.removeEventListener('scroll', startPlay);
+        }).catch(e => console.warn("Vẫn chờ tương tác..."));
+    };
 
-    if (playPromise !== undefined) {
-        playPromise.catch(() => {
-            // Nếu bị chặn (như trong hình của bạn), 
-            // ta tạo một sự kiện "nghe lén" lần click đầu tiên của khách
-            console.log("SGR System: Nhạc đã sẵn sàng, chờ bạn chạm vào trang web để nổ máy...");
-            
-            const playOnInteraction = () => {
-                audio.play();
-                // Sau khi phát được rồi thì gỡ bỏ sự kiện này để không bị lặp
-                document.removeEventListener('click', playOnInteraction);
-                document.removeEventListener('touchstart', playOnInteraction);
-            };
-
-            document.addEventListener('click', playOnInteraction);
-            document.addEventListener('touchstart', playOnInteraction); // Cho điện thoại
-        });
-    }
+    // Lắng nghe mọi hành động nhỏ nhất của khách
+    document.addEventListener('click', startPlay);
+    document.addEventListener('scroll', startPlay); 
     
-    audio.onended = () => { audio.src = ""; };
+    // Thử phát ngay (nếu khách đã click vào menu trước đó)
+    startPlay();
+}
+
+// 2. Chỉnh lại hàm runSGRChat để phát nhạc NHƯ NHẠC NỀN (Phát ngay lúc bắt đầu gõ chữ)
+function runSGRChat(nodeKey) {
+    const db = getSGRDatabase();
+    const node = db[nodeKey];
+    
+    // PHÁT NGAY TẠI ĐÂY - Không đợi gõ xong nữa cho đơn giản
+    if (node.music) {
+        playSGRMusic(node.music);
+    }
+
+    const typewriterEl = document.getElementById('typewriter');
+    const optionsContainer = document.getElementById('chat-options');
+    if (!typewriterEl || !optionsContainer) return;
+
+    typewriterEl.innerHTML = "";
+    optionsContainer.innerHTML = "";
+
+    let i = 0;
+    function typeEffect() {
+        if (i < node.text.length) {
+            typewriterEl.innerHTML += node.text.charAt(i);
+            i++;
+            setTimeout(typeEffect, 40);
+        } else {
+            // Gõ xong thì hiện nút bấm
+            if (node.options) {
+                node.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'chat-btn';
+                    btn.innerHTML = opt.label;
+                    btn.onclick = () => runSGRChat(opt.next);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+            if (node.autoReset) setTimeout(() => runSGRChat('start'), 3000);
+        }
+    }
+    typeEffect();
 }
 
     // Hàm tạo Database động để không bị undefined
