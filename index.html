@@ -1054,38 +1054,40 @@
 
         overlay.onclick = toggleMenu;
     </script>
-   <script>
+<script>
     /* ---------------------------------------------------------
-       1. DANH SÁCH NGÀY LỄ & NHẠC HIỆU (Cấu hình tại đây)
-       Cú pháp: "Ngày-Tháng": { text: "Lời chào", music: "Link nhạc" }
+       1. DANH SÁCH NGÀY LỄ & NHẠC HIỆU (Đầy đủ các ngày lễ VN)
+       Cấu hình: "Ngày-Tháng": { text: "Lời chào", music: "Link" }
        --------------------------------------------------------- */
     const VN_HOLIDAYS = {
         "01-01": { text: "Chúc mừng Năm Mới!", music: "" },
-        "14-02": { text: "Valentine vui vẻ!", music: "" },
+        "14-02": { text: "Valentine vui vẻ! Chúc bạn tìm được mảnh ghép 1/64 của đời mình!", music: "" },
         "08-03": { text: "Chúc mừng ngày Quốc tế Phụ nữ 8/3!", music: "" },
-        "07-05": { text: "Kỷ niệm chiến thắng Điện Biên Phủ 7/5!", music: "./img/audio/GPDB_7-5.mp3" }, // Ví dụ nhạc
         "30-04": { text: "Chào mừng ngày Giải phóng miền Nam 30/4!", music: "./img/audio/GPMN_30-4.mp3" },
         "01-05": { text: "Chào mừng ngày Quốc tế Lao động 1/5!", music: "" },
-        "19-05": { text: "Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh!", music: "" },
-        "02-09": { text: "Chào mừng ngày Quốc khánh 2/9!", music: "./img/audio/TNDL_QC.mp3" },
+        "07-05": { text: "Kỷ niệm chiến thắng Điện Biên Phủ 7/5!", music: "./img/audio/GPDB_7-5.mp3" },
+        "19-05": { text: "Kỷ niệm ngày sinh Chủ tịch Hồ Chí Minh 19/5!", music: "" },
+        "01-06": { text: "Chúc mừng ngày Quốc tế Thiếu nhi 1/6!", music: "" },
+        "27-07": { text: "Ngày Thương binh - Liệt sĩ 27/7.", music: "" },
+        "19-08": { text: "Ngày truyền thống Công an nhân dân 19/8!", music: "" },
+        "02-09": { text: "Chào mừng ngày Quốc khánh nước CHXHCN Việt Nam 2/9!", music: "./img/audio/TNDL_QC.mp3" },
+        "10-10": { text: "Kỷ niệm ngày Giải phóng Thủ đô 10/10!", music: "" },
         "20-10": { text: "Chúc mừng ngày Phụ nữ Việt Nam 20/10!", music: "" },
         "20-11": { text: "Chào mừng ngày Nhà giáo Việt Nam 20/11!", music: "" },
-        "24-12": { text: "Giáng sinh an lành!", music: "" },
+        "22-12": { text: "Ngày thành lập Quân đội nhân dân Việt Nam 22/12!", music: "" },
+        "24-12": { text: "Giáng sinh an lành! SGR Collectibles chúc bạn ấm áp!", music: "" },
+        "31-12": { text: "Ngày cuối cùng của năm rồi! Tổng kết bộ sưu tập thôi!", music: "" },
     };
 
     /* ---------------------------------------------------------
-       2. LOGIC HỆ THỐNG (Xử lý địa điểm, ngày tháng, âm thanh)
+       2. LOGIC HỆ THỐNG (Âm thanh & Địa điểm)
        --------------------------------------------------------- */
-    
-    // Hàm phát nhạc hiệu
     function playSGRMusic(url) {
         const audio = document.getElementById('sgr-audio');
         if (url && audio) {
             audio.src = url;
-            audio.volume = 0.5; // Âm lượng 50%
-            audio.play().catch(e => console.log("Hệ thống: Autoplay bị chặn bởi trình duyệt. Nhạc sẽ phát khi bạn tương tác."));
-            
-            // Nhạc phát xong 1 lần rồi tự dừng nguồn
+            audio.volume = 0.5;
+            audio.play().catch(e => console.warn("SGR System: Chờ tương tác để phát nhạc."));
             audio.onended = () => { audio.src = ""; };
         }
     }
@@ -1106,27 +1108,27 @@
         const dateKey = `${day}-${month}`;
         const year = now.getFullYear();
 
-        // Kiểm tra nếu là ngày đặc biệt
         if (VN_HOLIDAYS[dateKey]) {
-            const holiday = VN_HOLIDAYS[dateKey];
-            // Nếu có nhạc thì gọi hàm phát nhạc
-            if (holiday.music) {
-                playSGRMusic(holiday.music);
-            }
-            return `${holiday.text} ${year}?`;
+            return {
+                text: `${VN_HOLIDAYS[dateKey].text} ${year}?`,
+                music: VN_HOLIDAYS[dateKey].music
+            };
         }
-
-        // Ngày bình thường
-        const loc = getSystemLocation();
-        return `${loc} hôm nay thế nào?`;
+        return {
+            text: `${getSystemLocation()} hôm nay thế nào?`,
+            music: null
+        };
     }
 
     /* ---------------------------------------------------------
-       3. CƠ SỞ DỮ LIỆU HỘI THOẠI (SGR Database)
+       3. CƠ SỞ DỮ LIỆU HỘI THOẠI
        --------------------------------------------------------- */
+    const greetingData = getDynamicGreeting();
+
     const sgrDatabase = {
         start: {
-            text: `Chào mừng bạn đến với SGR Collectibles! ${getDynamicGreeting()} Bạn đã sẵn sàng khám phá?`,
+            text: `Chào mừng bạn đến với SGR Collectibles! ${greetingData.text} Bạn đã sẵn sàng khám phá?`,
+            music: greetingData.music,
             options: [
                 { label: "Y", next: "show_collection" }, 
                 { label: "N", next: "bye" }
@@ -1134,9 +1136,7 @@
         },
         show_collection: {
             text: "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.",
-            options: [
-                { label: "OK", next: "start" }
-            ]
+            options: [{ label: "OK", next: "start" }]
         },
         bye: {
             text: "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣",
@@ -1146,7 +1146,7 @@
     };
 
     /* ---------------------------------------------------------
-       4. HÀM VẬN HÀNH (Typewriter + Auto Reset)
+       4. HÀM VẬN HÀNH (Typewriter + Play Music After Type)
        --------------------------------------------------------- */
     function runSGRChat(nodeKey) {
         const node = sgrDatabase[nodeKey];
@@ -1163,7 +1163,10 @@
                 i++;
                 setTimeout(typeEffect, 40);
             } else {
-                // Hiển thị nút bấm Y/N/OK sau khi gõ xong
+                // Phát nhạc ngay sau khi gõ xong chữ
+                if (node.music) playSGRMusic(node.music);
+
+                // Hiện nút bấm
                 if (node.options && node.options.length > 0) {
                     node.options.forEach(opt => {
                         const btn = document.createElement('button');
@@ -1177,11 +1180,8 @@
                     });
                 }
 
-                // Tự động quay về sau 3 giây nếu là chế độ chờ (bye)
                 if (node.autoReset) {
-                    setTimeout(() => {
-                        runSGRChat('start');
-                    }, 3000); 
+                    setTimeout(() => { runSGRChat('start'); }, 3000); 
                 }
             }
         }
