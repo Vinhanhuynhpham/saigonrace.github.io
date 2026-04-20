@@ -1083,6 +1083,15 @@
             y: "Tốt! Tôn trọng lịch sử, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
             n: "Bạn mệt mỏi lắm đúng không? đi chơi đâu đó rồi lát ghé SGR sau nha bạn ơi!"
         }
+    },
+    "22-12": { 
+        text: "Chào mừng ngày Thành Lập QĐNDVN 22-12-2026!", 
+        subText: "Bạn có phải quân nhân không?",
+        music: "./img/audio/2212.mp3",
+        responses: {
+            y: "Tuyệt! Chúc bạn một ngày thật ý nghĩa, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
+            n: "không sao đâu, bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến nhé!"
+        }
     }
     // Thêm các ngày khác tương tự...
 };
@@ -1121,12 +1130,12 @@
     const holiday = VN_HOLIDAYS[dateKey];
     
     // 1. Xác định câu chào và nhạc
-    let mainText = holiday ? `${holiday.text} ${holiday.subText}` : `${getSystemLocation()} hôm nay thế nào? Bạn đã sẵn sàng khám phá?`;
+    let mainText = holiday ? `${holiday.text} ${holiday.subText}` : `${getSystemLocation()} hôm nay thế nào?`;
     let musicUrl = holiday ? holiday.music : null;
 
     // 2. Xác định câu trả lời cho nút Y và N
-    let responseY = holiday ? holiday.responses.y : "Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.";
-    let responseN = holiday ? holiday.responses.n : "Cảm ơn đã ghé thăm! Chỉ tại chúng ta chưa hữu duyên 🤣";
+    let responseY = holiday ? holiday.responses.y : "Tuyệt! Bạn có thể tìm mục 'Bộ sưu tập' trên menu hoặc xuống dưới có mục điều hướng để đi đến.";
+    let responseN = holiday ? holiday.responses.n : "Cảm ơn đã rep! Chắc bạn mệt mỏi lắm đúng không? đi chơi đâu đó rồi lát ghé SGR sau nha bạn ơi!";
 
     return {
         start: {
