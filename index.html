@@ -1055,15 +1055,16 @@
         overlay.onclick = toggleMenu;
     </script>
 <script>
+    // 1. Cấu hình dữ liệu ngày lễ
     const VN_HOLIDAYS = {
         "01-01": { text: "Chúc mừng Năm Mới!", music: "" },
         "30-04": { text: "Chào mừng ngày Giải phóng miền Nam 30/4!", music: "./img/audio/304.mp3" },
         "07-05": { text: "Kỷ niệm chiến thắng Điện Biên Phủ 7/5!", music: "./img/audio/75db.mp3" },
         "02-09": { text: "Chào mừng ngày Quốc khánh 2/9!", music: "./img/audio/29vn.mp3" },
         "24-12": { text: "Giáng sinh an lành!", music: "" }
-        // Thêm các ngày khác tương tự...
     };
 
+    // 2. Các hàm lấy thông tin động
     function getSystemLocation() {
         try {
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -1087,46 +1088,7 @@
         return { text: `${getSystemLocation()} hôm nay thế nào?`, music: null };
     }
 
-    /* --- HÀM NHẠC NỀN TỰ ĐỘNG --- */
-function playSGRMusic(url) {
-    const audio = document.getElementById('sgr-audio');
-    if (!url || !audio) return;
-
-    audio.src = url;
-    audio.volume = 0.5;
-
-    // Hàm "Kích nổ" nhạc hiệu
-    const triggerAudio = () => {
-        audio.play().then(() => {
-            console.log("🔊 SGR: Nhạc hiệu ngày lễ đã phát!");
-            // Đã phát thành công thì gỡ bỏ sự kiện để tránh lặp lại
-            ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
-                document.removeEventListener(ev, triggerAudio)
-            );
-        }).catch(() => { /* Vẫn chờ hành động tiếp theo */ });
-    };
-
-    // Lắng nghe mọi hành động nhỏ nhất của người dùng
-    ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
-        document.addEventListener(ev, triggerAudio)
-    );
-
-    // Thử phát ngay (nếu khách đã click trước đó)
-    triggerAudio();
-}
-
-/* --- CHỈNH LẠI HÀM CHAT: TRUY CẬP LÀ PHÁT LUÔN --- */
-function runSGRChat(nodeKey) {
-    const db = getSGRDatabase();
-    const node = db[nodeKey];
-    
-    // TRUY CẬP LÀ NẠP NHẠC NGAY
-    if (node.music) playSGRMusic(node.music);
-
-    // ... (Phần gõ chữ typewriter giữ nguyên bên dưới)
-}
-
-    // Hàm tạo Database động để không bị undefined
+    // 3. Database nội dung Chat
     function getSGRDatabase() {
         const g = getDynamicGreeting();
         return {
@@ -1147,45 +1109,71 @@ function runSGRChat(nodeKey) {
         };
     }
 
-    function runSGRChat(nodeKey) {
-    const db = getSGRDatabase();
-    const node = db[nodeKey];
-    
-    // --- KHÚC NÀY LÀM ĐƠN GIẢN: PHÁT NHẠC NGAY ---
-    if (node.music) {
-        playSGRMusic(node.music); 
+    // 4. Hàm xử lý nhạc nền (Background Music)
+    function playSGRMusic(url) {
+        const audio = document.getElementById('sgr-audio');
+        if (!url || !audio) return;
+
+        // Chỉ load nếu nguồn nhạc thay đổi
+        if (audio.src.indexOf(url.replace('./', '')) === -1) {
+            audio.src = url;
+            audio.volume = 0.5;
+        }
+
+        const triggerAudio = () => {
+            audio.play().then(() => {
+                console.log("🔊 SGR: Nhạc hiệu đã phát!");
+                ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
+                    document.removeEventListener(ev, triggerAudio)
+                );
+            }).catch(() => {});
+        };
+
+        ["click", "scroll", "touchstart", "mousemove"].forEach(ev => 
+            document.addEventListener(ev, triggerAudio)
+        );
+        triggerAudio();
     }
-    // ---------------------------------------------
 
-    const typewriterEl = document.getElementById('typewriter');
-    const optionsContainer = document.getElementById('chat-options');
-    if (!typewriterEl || !optionsContainer) return;
+    // 5. Hàm chạy Chat và Hiệu ứng chữ
+    function runSGRChat(nodeKey) {
+        const db = getSGRDatabase();
+        const node = db[nodeKey];
+        if (!node) return;
 
-    typewriterEl.innerHTML = "";
-    optionsContainer.innerHTML = "";
+        // Phát nhạc ngay khi vào node có nhạc
+        if (node.music) playSGRMusic(node.music);
 
-    let i = 0;
-    function typeEffect() {
-        if (i < node.text.length) {
-            typewriterEl.innerHTML += node.text.charAt(i);
-            i++;
-            setTimeout(typeEffect, 40);
-        } else {
-            // Sau khi gõ xong chỉ hiện nút bấm, không cần gọi play music ở đây nữa
-            if (node.options) {
-                node.options.forEach(opt => {
-                    const btn = document.createElement('button');
-                    btn.className = 'chat-btn';
-                    btn.innerHTML = opt.label;
-                    btn.onclick = () => runSGRChat(opt.next);
-                    optionsContainer.appendChild(btn);
-                });
+        const typewriterEl = document.getElementById('typewriter');
+        const optionsContainer = document.getElementById('chat-options');
+        if (!typewriterEl || !optionsContainer) return;
+
+        typewriterEl.innerHTML = "";
+        optionsContainer.innerHTML = "";
+
+        let i = 0;
+        function typeEffect() {
+            if (i < node.text.length) {
+                typewriterEl.innerHTML += node.text.charAt(i);
+                i++;
+                setTimeout(typeEffect, 40);
+            } else {
+                if (node.options) {
+                    node.options.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = 'chat-btn';
+                        btn.innerHTML = opt.label;
+                        btn.onclick = () => runSGRChat(opt.next);
+                        optionsContainer.appendChild(btn);
+                    });
+                }
+                if (node.autoReset) setTimeout(() => runSGRChat('start'), 3000);
             }
         }
+        typeEffect();
     }
-    typeEffect();
-}
 
+    // 6. Khởi chạy khi trang web tải xong
     window.addEventListener('DOMContentLoaded', () => runSGRChat('start'));
 </script>
 
