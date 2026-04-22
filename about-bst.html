@@ -42,6 +42,74 @@
             display: flex;
             flex-direction: column;
         }
+        /* 1. ĐỊNH NGHĨA BIẾN MÀU SẮC (Dùng chung cho toàn card) */
+:root {
+    --ink: #1e3f3f; /* Màu xanh đặc trưng của SGR */
+}
+
+/* 2. CSS CHO CARD (Dùng class của Bootstrap nhưng ghi đè lại) */
+.card {
+    border: none;
+    border-radius: 8px; /* Bo góc nhẹ cho hiện đại */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+/* Hiệu ứng bay bổng khi di chuột vào xe */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* 3. PHẦN CHỮ TRONG CARD */
+.card-title {
+    color: var(--ink);
+    font-family: 'Space Mono', monospace; /* Font máy tính An đang dùng */
+    font-size: 16px; /* Tương đương medium */
+    font-weight: 700;
+}
+
+.card-text.text-muted {
+    font-size: 12px;
+    letter-spacing: -0.2px;
+    opacity: 0.7;
+    margin-bottom: 15px;
+}
+
+/* 4. ĐỊNH DẠNG HÌNH ẢNH XE */
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4/3; /* Giữ các ảnh xe luôn cùng một tỉ lệ khung hình */
+    object-fit: cover; /* Tránh làm méo ảnh xe khi kích thước khác nhau */
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* 5. PHẦN FOOTER CỦA CARD (Nơi chứa nút Xem thêm và mã số #) */
+.card-body {
+    padding: 1.25rem;
+}
+
+.btn-outline-dark {
+    border-color: var(--ink);
+    color: var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    border-radius: 0; /* Để nút vuông vức theo style kỹ thuật */
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--ink);
+    color: #fff;
+}
+
+.text-body-dark {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.5;
+}
         /* ===== FULL BROWSER HERO ===== */
         
         .hero {
@@ -728,8 +796,22 @@
     <div class="middle-column">
       <div class="about-me">
         <h3>Về tôi <i class="bi bi-person-wheelchair"></i></h3>
-        <strong title="đừng tò mò 🤣" onclick="toggleAudio()" class="neon-hover">Huynh Pham Vinh An</strong>
-        <p>Sinh Viên (graphic design)<br>Cao Đẳng FPT PoLYTECHNIC</p>
+        <br>
+        <div class="card shadow-sm">
+                        <img src="./img/AN.jpg" alt="64_Dodge_330"  >
+                        <div class="card-body">
+                            <h5 class="card-title mb-1 neon-hover"title="đừng tò mò 🤣">Huynh Pham Vinh An</h5>
+                            <p class="card-text text-muted">Sinh Viên (graphic design)<br>Cao Đẳng FPT PoLYTECHNIC</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="showCarInfo()">
+                                        Xem thêm
+                                    </button>
+                                </div>
+                                <small class="text-body-dark" onclick="toggleAudio()" target="_blank">▶ PLAY</small>
+                            </div>
+                        </div>
+                    </div>
       </div>
 
       <div class="contact">
@@ -741,7 +823,7 @@
     </div>
 
     <div class="right-column">
-        <h3>Fanpage <i class="bi bi-person-wheelchair"></i></h3>
+        <h3>Fanpage <i class="bi bi-facebook"></i></h3>
       <div class="fanpage">
         <div class="feature-card feature-image">
     <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fsaigonrace%2F&tabs&width=340&height=130&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="130" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
@@ -828,8 +910,8 @@
                 <p class="mb-1 text-pixel">liên hệ qua mail:</p>
                 <p class="fw-bold">sgrcollectibles04@gmail.com</p>
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/vinhan.huynhpham.1" class="me-2"><i class="bi bi-facebook" title="Facebook"></i></a>
-                    <a href="https://www.instagram.com/vinh_an_huynh_pham_001/" class="me-2"><i class="bi bi-instagram" title="Instagram"></i></a>
+                    <a href="https://www.facebook.com/saigonrace" class="me-2"><i class="bi bi-facebook" title="Facebook"></i></a>
+                    <a href="https://www.instagram.com/vinh_an_huynh_pham/" class="me-2"><i class="bi bi-instagram" title="Instagram"></i></a>
                     <a href="https://zalo.me/0944835045"><i class="bi bi-telephone-fill" title="Zalo"></i></a>
                 </div>
             </div>
@@ -845,6 +927,20 @@
             </div>
         </div>
     </div>
+    <!-- Modal hiển thị thông tin -->
+                <div class="modal fade" id="carInfoModal" tabindex="-1" aria-labelledby="carInfoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="carInfoModalLabel" style="color: #1e3f3f;"><img src="./img/SGRsign.svg" alt="text" width="77" class="navbar-brand text-warning"> INFO</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                            </div>
+                            <div class="modal-body" id="carModalContent">
+                                <!-- Nội dung sẽ được thêm bằng JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
 </footer>
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -923,6 +1019,7 @@
     </script>
     <script src="https://cdn.counter.dev/script.js" data-id="f457645d-3cd5-4919-8a2f-f3d87d6234f1" data-utcoffset="7"></script>
     <script src="https://plugin-code.salesmartly.com/js/project_514093_530078_1761838458.js"></script>
+    <script src="info about.js"></script>
 </body>
 
 </html>
