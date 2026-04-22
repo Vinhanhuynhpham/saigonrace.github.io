@@ -707,37 +707,89 @@ body {
 
         <br>
         <!-- FOOTER -->
-        <footer>
-            <div class="footer-wrap">
-                <div class="footer-brand">
-                    <strong style="font-size: medium;">SGR Collectibles</strong> 1:64 Die-cast Collection · bộ sưu tập xe mô hình 1:64
-                    <div class="copyright">
-                        SINCE 2024 <b>by</b> SGR Collectibles.
-                    </div>
+        <footer class="sgr-footer">
+        <div class="container footer-content">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    
+                    <p class="mb-1 text-pixel">1:64 Die-cast Collection</p>
+                    <p class="small text-pixel">bộ sưu tập xe mô hình 1:64</p>
+                    <p class="mb-1 fw-bold">SINCE 2024 by SGR Collectibles™</p>
+
+                    <img src="./img/warning.svg" alt="logo" width="300" >
                 </div>
 
-                <div class="footer-links">
-                    <a href="https://www.facebook.com/vinhan.huynhpham.1">Facebook</a>
-<a href="https://www.instagram.com/vinh_an_huynh_pham_001/">Instagram</a>
-<a href="https://zalo.me/0944835045">Zalo</a>
-<a href="contact-bst.html">Contact</a>
+                <div class="col-md-4 mb-4 text-md-left">
+                    <ul class="nav flex-column align-items-md-left">
+                        <li class="nav-item"><a href="index.html" class="nav-link">Trang chủ</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Bộ sưu tập</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="bst-hw.html">Hot Wheels</a></li>
+                                <li><a class="dropdown-item" href="bst-m-box.html">Macthbox</a></li>
+                                <li><a class="dropdown-item" href="bst-tmc.html">Tomica</a></li>
+                                <li><a class="dropdown-item" href="bst-mjr.html">Majorette</a></li>
+                                <li><a class="dropdown-item" href="bst-p-race.html">Pop Race</a></li>
+                                <li><a class="dropdown-item" href="bst-brg.html">Burago</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Shop</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="sale-bst.html">Sản Phẩm</a></li>
+                                <li><a class="dropdown-item" href="tl-bst.html">Thanh lý</a></li>
+                                <li><a class="dropdown-item" href="sold-bst.html">Sold/ Sold out</a></li>
+                                <li><a class="dropdown-item" href="https://docs.google.com/spreadsheets/d/1VrywcS-HlmKHSEtWk7kA7-ZZyxMc9CjTkAMhlpKvMdw/edit?usp=sharing">Bảng đánh giá</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="contact.bst.html" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="about-bst.html" class="nav-link">About</a></li>
+                    </ul>
                 </div>
-            </div>
-            <!-- Modal hiển thị thông tin -->
-            <div class="modal fade" id="carInfoModal" tabindex="-1" aria-labelledby="carInfoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="carInfoModalLabel" style="color: #1e3f3f;"><img src="./img/SGRsign.svg" alt="text" width="77" class="navbar-brand text-warning"> Thông tin xe</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                        </div>
-                        <div class="modal-body" id="carModalContent">
-                            <!-- Nội dung sẽ được thêm bằng JS -->
-                        </div>
+
+                <div class="col-md-4 mb-4 text-md-left">
+                    <p class="mb-1 text-pixel">liên hệ qua mail:</p>
+                    <p class="fw-bold">sgrcollectibles04@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/vinhan.huynhpham.1"><i class="bi bi-facebook" title="Facebook"></i></a>
+                        <a href="https://www.instagram.com/vinh_an_huynh_pham_001/"><i class="bi bi-instagram" title="Instagram"></i></a>
+                        <a href="https://zalo.me/0944835045"><i class="bi bi-telephone-fill" title="Zalo"></i></a>
                     </div>
                 </div>
             </div>
-        </footer>
+
+            <div class="logo-container">
+                
+                <img src="./img/SGR GFT.png" alt="SGR Logo" class="main-logo-img">
+                
+                <div class="sticker-layer">
+                    
+                    <img src="./img/csgt.svg" alt="deco" class="sticker st-1">
+                    
+                    <img src="./img/CTCX_SG.svg" alt="deco" class="sticker st-2">
+                    
+                    <img src="./img/vf3.svg" alt="deco" class="sticker st-3">
+                    
+                    <img src="./img/icon4.svg" alt="deco" class="sticker st-4">
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Modal hiển thị thông tin -->
+                <div class="modal fade" id="carInfoModal" tabindex="-1" aria-labelledby="carInfoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="carInfoModalLabel" style="color: #1e3f3f;"><img src="./img/SGRsign.svg" alt="text" width="77" class="navbar-brand text-warning"> Thông tin xe</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                            </div>
+                            <div class="modal-body" id="carModalContent">
+                                <!-- Nội dung sẽ được thêm bằng JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </footer>
 
         <script>
             function toggleMenu() {
