@@ -1060,11 +1060,10 @@
     // 1. Cấu hình dữ liệu ngày lễ
     const VN_HOLIDAYS = {
     "30-04": { 
-        text: "Chào mừng ngày Giải phóng miền Nam 30-04-2026 (30-04-1975)! <img src='./img/FNL_Flag.svg' class='holiday-icon'>", 
+        text: "Chào mừng ngày Giải phóng miền Nam 30-04-2026 (30-04-1975)!", 
         
         subText: "Hôm nay bạn đã sẵn sàng hết mình với Tổ Quốc chưa?",
         music: "./img/audio/304.mp3",
-        icon: "./img/FNL_Flag.svg",
         responses: {
             y: "Tuyệt vời! Hào khí ngút trời, cùng xem ngay bộ sưu tập xe 'chiến' nhất của SGR nào!",
             n: "Ơ kìa, ngày vui thế này mà sao lại từ chối? Nghỉ ngơi tí rồi quay lại xem xe với tui nhé! 🤣"
@@ -1194,38 +1193,33 @@
         const node = db[nodeKey];
         if (!node) return;
 
-        // ... (phần nhạc giữ nguyên)
+        // Phát nhạc ngay khi vào node có nhạc
+        if (node.music) playSGRMusic(node.music);
 
         const typewriterEl = document.getElementById('typewriter');
         const optionsContainer = document.getElementById('chat-options');
-        
+        if (!typewriterEl || !optionsContainer) return;
+
         typewriterEl.innerHTML = "";
         optionsContainer.innerHTML = "";
 
-        // TÁCH CHỮ VÀ HÌNH Ở ĐÂY
-        // Regex này sẽ tìm cái thẻ <img> ở cuối chuỗi
-        const match = node.text.match(/(.*)(<img.*>)/);
-        let plainText = node.text;
-        let imgTag = "";
-
-        if (match) {
-            plainText = match[1]; // Phần chữ
-            imgTag = match[2];    // Phần thẻ <img>
-        }
-
         let i = 0;
         function typeEffect() {
-            if (i < plainText.length) {
-                typewriterEl.innerHTML += plainText.charAt(i);
+            if (i < node.text.length) {
+                typewriterEl.innerHTML += node.text.charAt(i);
                 i++;
                 setTimeout(typeEffect, 40);
             } else {
-                // Chữ chạy xong thì đập cái hình vào một phát ăn ngay
-                typewriterEl.innerHTML += imgTag; 
-
                 if (node.options) {
-                    // ... (tạo button giữ nguyên)
+                    node.options.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = 'chat-btn';
+                        btn.innerHTML = opt.label;
+                        btn.onclick = () => runSGRChat(opt.next);
+                        optionsContainer.appendChild(btn);
+                    });
                 }
+                if (node.autoReset) setTimeout(() => runSGRChat('start'), 3000);
             }
         }
         typeEffect();
