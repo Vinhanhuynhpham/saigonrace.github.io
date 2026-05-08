@@ -850,23 +850,28 @@
     </audio>
 
     <script>
-        let isPlaying = false;
+    let isPlaying = false;
+    // Lưu lại cái tên web gốc để lúc tắt nhạc nó trả về đúng tên cũ
+    const originalTitle = document.title; 
 
-        function toggleAudio() {
-            const audio = document.getElementById("warningSound");
+    function toggleAudio() {
+        const audio = document.getElementById("warningSound");
 
-            if (isPlaying) {
-                audio.pause();
-
-            } else {
-                audio.play().catch(err => {
-                    console.log("Audio play bị chặn:", err);
-                });
-            }
-
-            isPlaying = !isPlaying;
+        if (isPlaying) {
+            audio.pause();
+            // Trả về tên web ban đầu khi dừng nhạc
+            document.title = originalTitle;
+        } else {
+            audio.play().catch(err => {
+                console.log("Audio play bị chặn:", err);
+            });
+            // Cập nhật tên bài hát lên Tab trình duyệt
+            document.title = "SGR Collectibles_About: 🎵 Đang phát_Lò Vi Sóng_Quang Hùng MasterD";
         }
-    </script>
+
+        isPlaying = !isPlaying;
+    }
+</script>
 
 
     <!-- FOOTER -->
