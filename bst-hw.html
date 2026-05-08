@@ -23,7 +23,7 @@
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        :root {
+           :root {
             --ink: #1e3f3f;
         }
         
@@ -41,12 +41,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-        
-        .card-title {
-            color: #1e3f3f;
-            font-family: 'Space Mono', monospace;
-            font-size: medium;
         }
         /* ===== FULL BROWSER HERO ===== */
         
@@ -307,6 +301,35 @@
         .right {
             position: relative;
             height: 100%;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .about-box h4 {
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .about-box p {
+            font-size: 13px;
+            line-height: 1.7;
+            opacity: .7;
+            max-width: 320px;
+        }
+        
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .timeline li {
+            font-size: 13px;
+            opacity: .65;
+            margin-bottom: 10px;
         }
         /* ảnh chung */
         
@@ -328,8 +351,9 @@
             bottom: 60px;
             opacity: .85;
         }
-      /* ===== FOOTER ===== */
-    /* LAYER 1: Nền Footer */
+        /* ===== FOOTER ===== */
+        
+        /* LAYER 1: Nền Footer */
 .sgr-footer {
     position: relative;
     background-color: var(--sgr-teal); /* Màu nền dự phòng */
@@ -401,6 +425,207 @@
 .st-3 { top: 52%; left: 52%; transform: rotate(-5deg); }
 .st-4 { top: 58%; left: 77%; transform: rotate(10deg); }
 
+/* Căn trái cho các cột trong footer content */
+.footer-content .row > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Đây là dòng quan trọng nhất để căn trái */
+    text-align: left;        /* Đảm bảo chữ cũng căn trái */
+}
+
+/* Đảm bảo danh sách nav không có padding mặc định làm lệch lề */
+.sgr-footer .nav {
+    padding-left: 0;
+    margin-left: 0;
+    align-items: flex-start;
+}
+
+.sgr-footer .nav-link {
+    padding-left: 0; /* Xóa khoảng trống thừa bên trái của link */
+}
+        /* ===== RESPONSIVE ===== */
+        
+        @media(min-width:768px) {
+            .menu-toggle {
+                display: none
+            }
+            .sidebar,
+            .overlay {
+                display: none
+            }
+        }
+        
+        @media(max-width:767px) {
+            .menu, .icons {
+                display: none
+            }
+            .menu-toggle {
+                display: block
+            }
+        }
+        
+        .nav-search {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-search input {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, .25);
+            background: transparent;
+            padding: 6px 4px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--ink);
+            width: 140px;
+            outline: none;
+        }
+        
+        .nav-search input::placeholder {
+            color: rgba(0, 0, 0, .4);
+        }
+        
+        .nav-search input:focus {
+            border-bottom-color: var(--ink);
+        }
+        
+        .search-icon {
+            font-size: 30px;
+            opacity: .5;
+            margin-right: 6px;
+        }
+        /* ===== MOBILE STABILITY FIX ===== */
+        
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+            .hero {
+                padding: 24px 20px;
+            }
+            .main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            /* khóa size chữ */
+            
+            .title {
+                font-size: 42px;
+                line-height: 1.05;
+            }
+            .desc {
+                max-width: 100%;
+                font-size: 13px;
+            }
+            /* stats không tràn */
+            
+            .stats {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .stat-item {
+                width: 45%;
+            }
+            .stat-number {
+                font-size: 22px;
+            }
+            /* right không phình */
+            
+            .right {
+                padding: 0;
+                gap: 24px;
+            }
+            .about-box p,
+            .timeline li {
+                font-size: 12px;
+            }
+            iframe {
+                max-width: 100%;
+            }
+        }
+        
+        
+   /* Nội dung giới hạn */
+.about-page {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Banner full màn hình */
+.about-banner {
+  grid-column: 2 / 12;
+}
+
+.about-banner img {
+  width: 90%;
+  height: 35vw;      /* cao theo màn hình */
+  max-height: 400px;
+  object-fit: cover;
+}
+/* Câu chuyện */
+.about-story {
+  grid-column: 2 / 12;
+}
+
+/* 3 cột dưới */
+.about-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px; /* giảm từ 30px xuống */
+}
+
+/* Cột giữa & phải xếp dọc */
+.middle-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Bỏ hết padding lớn */
+.process,
+.about-me,
+.contact,
+.fanpage,
+.image-box {
+  padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .about-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 18px;              /* khoảng cách giữa icon */
+  font-size: 18px;
+}
+
+.link-dark1 {
+            color: #1e3f3f;
+        }
+        
+        .neon-hover {
+            font-weight: 600;
+            font-family:'Space Mono'; 
+            color: #1e3f3f;
+            cursor: pointer;
+            transition: color 0.25s ease;
+        }
+        /* hover bật neon */
+        
+        .neon-hover:hover {
+            color: #4ccfc1;
+            /* neon teal */
+            
+            text-shadow: 0 0 3px rgba(76, 207, 193, 0.4), 0 0 6px rgba(76, 207, 193, 0.25);
+        }
     </style>
 </head>
 
