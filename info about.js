@@ -38,24 +38,39 @@ function showCarInfo(bio = '', facebookName = '', email = '', instagramName = ''
         </div>
 
         <div style="line-height: 2;">
-            <strong>Bio:</strong> ${hobby || 'bị xe chơi'}<br>
-            <div class="d-flex align-items: center; gap: 10px; margin-top: 5px;">
-                <span style="
-                    background-color: #1e3f3f; 
-                    color: #fff; 
-                    padding: 2px 12px; 
-                    border-radius: 20px; 
-                    font-size: 11px; 
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    display: inline-block;
-                    letter-spacing: 1px;
-                ">
-                    ${role || 'Admin'}
-                </span>
-                
-            </div>
-        </div>
+    <strong>Bio:</strong> ${hobby || 'bị xe chơi'}<br>
+    
+    <div class="d-flex align-items-center" style="gap: 8px; margin-top: 8px;">
+        
+        <span style="
+            background-color: #1e3f3f; 
+            color: #fff; 
+            padding: 2px 12px; 
+            border-radius: 20px; 
+            font-size: 10px; 
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        ">
+            Admin
+        </span>
+
+        <span style="
+            background-color: #fff; 
+            color: #1e3f3f; 
+            border: 1px solid #1e3f3f;
+            padding: 1px 12px; 
+            border-radius: 20px; 
+            font-size: 10px; 
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        ">
+            Collector
+        </span>
+        
+    </div>
+</div>
       </div>
     `;
 
